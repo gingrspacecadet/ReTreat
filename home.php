@@ -34,6 +34,7 @@ if ($conn->connect_error) {
         body {
             background-color: #f4f4f4; /* Light mode default background */
             color: #2e2e2e; /* Default text color */
+            transition: background-color 0.3s, color 0.3s; /* Added transition */
         }
 
         .container {
@@ -44,7 +45,7 @@ if ($conn->connect_error) {
             max-width: 1200px;
             min-width: 400px;
             background-color: #f4f4f4; /* Light mode default container background */
-            transition: background-color 0.3s;
+            transition: background-color 0.3s; /* Added transition */
         }
 
         /* Light mode styles */
@@ -58,6 +59,7 @@ if ($conn->connect_error) {
             background-color: #f4f4f4;
             color: black;
             border-color: #ccc;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Added transition */
         }
 
         textarea {
@@ -77,6 +79,7 @@ if ($conn->connect_error) {
             color: #f4f4f4;
             cursor: pointer;
             border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s; /* Added transition */
         }
 
         .posts-container {
@@ -86,6 +89,7 @@ if ($conn->connect_error) {
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             margin-top: 2vh;
+            transition: background-color 0.3s; /* Added transition */
         }
 
         .posts-container::-webkit-scrollbar {
@@ -123,10 +127,12 @@ if ($conn->connect_error) {
         body.dark-mode {
             background-color: #181818;
             color: #f4f4f4;
+            transition: background-color 0.3s, color 0.3s; /* Added transition */
         }
 
         body.dark-mode .container {
             background-color: #181818;
+            transition: background-color 0.3s; /* Added transition */
         }
 
         body.dark-mode .post-box,
@@ -135,16 +141,19 @@ if ($conn->connect_error) {
             background-color: #181818;
             color: #f4f4f4;
             border-color: #555;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Added transition */
         }
 
         body.dark-mode button {
             background-color: #333;
             color: #f4f4f4;
             border: 1px solid #555;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Added transition */
         }
 
         body.dark-mode h1 {
             color: #f4f4f4;
+            transition: color 0.3s; /* Added transition */
         }
 
         /* Mode toggle button */
@@ -153,18 +162,20 @@ if ($conn->connect_error) {
             top: 10px;
             left: 10px;
             background-color: #007bff;
-            color: #;
+            color: white;
             padding: 10px;
             border: none;
             border-radius: 50%;
             cursor: pointer;
             font-size: 20px;
             z-index: 1000;
+            transition: background-color 0.3s, color 0.3s; /* Added transition */
         }
 
         /* Default h1 style for light mode */
         h1 {
             color: #2e2e2e;
+            transition: color 0.3s; /* Added transition */
         }
     </style>
 </head>
@@ -249,7 +260,21 @@ function submitPost() {
         } else {
             $("#message").text(data.success).css("color", "green");
 
-            let newPost = `<div class='post'><p><strong>${data.user}:</strong></p><p>${data.content}</p></div>`;
+            // Replace newline characters with <br> tags
+            let formattedContent = data.content.replace(/\n/g, '<br>');
+
+            // Convert the GMT time to the user's local time
+            let postTime = new Date(data.time + " GMT"); // Add " GMT" to ensure it's treated as GMT
+            let localTime = postTime.toLocaleString(); // Convert to local time
+
+            // Create a new post with formatted content and time
+            let newPost = `
+                <div class='post'>
+                    <p><strong>${data.user}:</strong></p>
+                    <p>${formattedContent}</p>
+                    <p><small>Posted at ${localTime}</small></p>
+                </div>
+            `;
             $("#posts").prepend(newPost);
         }
     }).fail(function() {
