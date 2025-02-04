@@ -25,92 +25,153 @@ if ($conn->connect_error) {
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            background-color: #c1c1c1;
             display: flex;
             justify-content: center;
             align-items: center;
+            transition: background-color 0.3s, color 0.3s;
         }
-        
+
+        body {
+            background-color: #f4f4f4; /* Light mode default background */
+            color: #2e2e2e; /* Default text color */
+        }
+
         .container {
-            width: 80vw; /* Set width to 80% of the viewport width */
-            height: 80vh; /* Set height to 80% of the viewport height */
+            width: 80vw;
+            height: 80vh;
             display: flex;
             flex-direction: column;
-            max-width: 1200px; /* Optional: Prevents the container from getting too wide */
-            min-width: 400px; /* Optional: Prevents it from being too narrow */
+            max-width: 1200px;
+            min-width: 400px;
+            background-color: #f4f4f4; /* Light mode default container background */
+            transition: background-color 0.3s;
         }
-        
-        .post-box {
-            width: 97%; /* Set to 90% of the container width */
-            padding: 1vw; /* Padding proportional to viewport width */
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+
+        /* Light mode styles */
+        body:not(.dark-mode) .container {
+            background-color: #f4f4f4;
         }
-        
+
+        body:not(.dark-mode) .post-box,
+        body:not(.dark-mode) .posts-container,
+        body:not(.dark-mode) textarea {
+            background-color: #f4f4f4;
+            color: black;
+            border-color: #ccc;
+        }
+
         textarea {
-            width: 97%; /* Takes up full width of the container */
-            height: 10vh; /* Height based on viewport height */
-            padding: 1vw; /* Padding proportional to viewport width */
+            width: 97%;
+            height: 10vh;
+            padding: 1vw;
             border: 1px solid #ccc;
             border-radius: 5px;
             resize: none;
         }
-        
+
         button {
-			margin-top: 1vh; /* Vertical margin relative to viewport height */
+            margin-top: 1vh;
             padding: 1vw 2vw;
             border: none;
             background-color: #007bff;
-            color: white;
+            color: #f4f4f4;
             cursor: pointer;
             border-radius: 5px;
         }
-        
+
         .posts-container {
-            flex-grow: 1; /* Takes up remaining space */
-            overflow-y: auto; /* Keep scrolling functionality */
-            background: white;
-            padding: 2vh 2vw; /* Padding relative to viewport size */
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 2vh 2vw;
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            margin-top: 2vh; /* Margin relative to viewport height */
+            margin-top: 2vh;
         }
-        
-        /* Hide scrollbar for Webkit browsers (Chrome, Safari) */
+
         .posts-container::-webkit-scrollbar {
-            display: none; /* Hide scrollbar */
+            display: none;
         }
-        
+
         .posts-container {
-            scrollbar-width: none; /* For Firefox */
-            -ms-overflow-style: none; /* For Internet Explorer 10+ */
+            scrollbar-width: none;
+            -ms-overflow-style: none;
         }
-        
+
         .post {
-            padding: 2vh; /* Padding based on viewport height */
+            padding: 2vh;
             border-bottom: 1px solid #ddd;
         }
-        
+
         .post:last-child {
             border-bottom: none;
         }
-        
+
         #loading {
             display: none;
             font-size: 1.4vh;
             color: gray;
         }
-        
+
         #message {
             color: green;
-            margin-top: 2vh; /* Vertical margin */
+            margin-top: 2vh;
             font-size: 1.4vh;
             font-weight: bold;
         }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #181818;
+            color: #f4f4f4;
+        }
+
+        body.dark-mode .container {
+            background-color: #181818;
+        }
+
+        body.dark-mode .post-box,
+        body.dark-mode .posts-container,
+        body.dark-mode textarea {
+            background-color: #181818;
+            color: #f4f4f4;
+            border-color: #555;
+        }
+
+        body.dark-mode button {
+            background-color: #333;
+            color: #f4f4f4;
+            border: 1px solid #555;
+        }
+
+        body.dark-mode h1 {
+            color: #f4f4f4;
+        }
+
+        /* Mode toggle button */
+        #mode-toggle {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #007bff;
+            color: #;
+            padding: 10px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            z-index: 1000;
+        }
+
+        /* Default h1 style for light mode */
+        h1 {
+            color: #2e2e2e;
+        }
     </style>
 </head>
+
 <body>
+
+<button id="mode-toggle" onclick="toggleMode()">🌙</button>
 
 <div class="container">
     <div class="post-box">
@@ -120,7 +181,7 @@ if ($conn->connect_error) {
 
     <div id="message"></div>
 
-    <h1 style="color:#2e2e2e">Posts</h1>
+    <h1>Posts</h1>
     <div class="posts-container" id="posts"></div>
     <p id="loading">Loading more posts...</p>
 </div>
@@ -138,7 +199,7 @@ function loadPosts() {
 
     $.get("load_posts.php", { offset: offset, limit: limit }, function(response) {
         let data = JSON.parse(response);
-        
+
         if (data.length === 0) {
             allPostsLoaded = true;
             $("#loading").text("No more posts.");
@@ -146,7 +207,9 @@ function loadPosts() {
         }
 
         data.forEach(post => {
-            let newPost = `<div class='post'><p><strong>${post.username}:</strong></p><p>${post.content}</p></div>`;
+            // Replace newline characters with <br> tags for proper line breaks in HTML
+            let formattedContent = post.content.replace(/\n/g, "<br>");
+            let newPost = `<div class='post'><p><strong>${post.username}:</strong></p><p>${formattedContent}</p></div>`;
             $("#posts").append(newPost);
         });
 
@@ -158,6 +221,7 @@ function loadPosts() {
         $("#loading").hide();
     });
 }
+
 
 // Load initial posts
 $(document).ready(function() {
@@ -193,6 +257,16 @@ function submitPost() {
     });
 
     $("#postContent").val("");
+}
+
+function toggleMode() {
+    document.body.classList.toggle("dark-mode");
+    const modeButton = document.getElementById("mode-toggle");
+    if (document.body.classList.contains("dark-mode")) {
+        modeButton.innerHTML = "🌞"; // Switch to sun icon for light mode
+    } else {
+        modeButton.innerHTML = "🌙"; // Switch to moon icon for dark mode
+    }
 }
 </script>
 
