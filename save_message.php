@@ -4,7 +4,6 @@ header('Content-Type: application/json'); // Ensure JSON response
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-
 if (!isset($_SESSION["user"])) {
     die(json_encode(["error" => "You must be logged in to post."]));
 }
@@ -33,7 +32,7 @@ $stmt->close();
 $time = gmdate("Y-m-d H:i:s"); // GMT/UTC time
 
 // Insert the post with time
-$stmt = $conn->prepare("INSERT INTO posts (user_id, content, time) VALUES (?, ?, ?)");
+$stmt = $conn->prepare("INSERT INTO posts (user_id, content, created_at) VALUES (?, ?, ?)");
 $stmt->bind_param("iss", $user_id, $content, $time);
 $stmt->execute();
 $stmt->close();

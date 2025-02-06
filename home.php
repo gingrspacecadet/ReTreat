@@ -38,7 +38,7 @@ if ($conn->connect_error) {
         }
 
         .container {
-            width: 80vw;
+			width: 80vw;
             height: 80vh;
             display: flex;
             flex-direction: column;
@@ -47,6 +47,12 @@ if ($conn->connect_error) {
             background-color: #f4f4f4; /* Light mode default container background */
             transition: background-color 0.3s; /* Added transition */
         }
+		.post-box {
+			text-align: right;
+			border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+		}	
 
         /* Light mode styles */
         body:not(.dark-mode) .container {
@@ -72,7 +78,9 @@ if ($conn->connect_error) {
         }
 
         button {
-            margin-top: 1vh;
+            margin-right: 4px;
+			margin-bottom: 4px;
+			margin-top: ;
             padding: 1vw 2vw;
             border: none;
             background-color: #007bff;
