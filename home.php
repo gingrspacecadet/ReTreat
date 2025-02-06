@@ -203,7 +203,7 @@ if ($conn->connect_error) {
 <body>
 
 <button id="logout" onclick="logout()">Logout</div>
-<button id="mode-toggle" onclick="toggleMode()"> ☽ </button>
+<button id="mode-toggle" onclick="toggleMode()"><img src="https://cdn.discordapp.com/attachments/1335983665242574970/1337121695089033268/moon-removebg-preview.png?ex=67a64b1e&is=67a4f99e&hm=0d915e720f153664b0bffad01731620d276464d9222b70143eea43250a8ee201&" width="40" height="40"></button>
 
 <div class="container">
     <div class="post-box">
@@ -315,9 +315,9 @@ function toggleMode() {
     document.body.classList.toggle("dark-mode");
     const modeButton = document.getElementById("mode-toggle");
     if (document.body.classList.contains("dark-mode")) {
-        modeButton.innerHTML = " ☼ "; // Switch to sun icon for light mode
+        modeButton.innerHTML = '<img src="https://cdn.discordapp.com/attachments/1335983665242574970/1337121694845894696/sun-removebg-preview.png?ex=67a64b1e&is=67a4f99e&hm=c998977a0b8494a7ac01d780f508b3feb430109d319bdbc80a92b132279aa87e& width="40" height="40"></img>'; // Switch to sun icon for light mode
     } else {
-        modeButton.innerHTML = " ☽ "; // Switch to moon icon for dark mode
+        modeButton.innerHTML = '<img src="https://cdn.discordapp.com/attachments/1335983665242574970/1337121695089033268/moon-removebg-preview.png?ex=67a64b1e&is=67a4f99e&hm=0d915e720f153664b0bffad01731620d276464d9222b70143eea43250a8ee201& width="40" height="40"></img>'; // Switch to moon icon for dark mode
     }
 }
 </script>
