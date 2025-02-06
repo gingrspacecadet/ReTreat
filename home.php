@@ -17,7 +17,7 @@ if ($conn->connect_error) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Retreat - Home</title>
+    <title>ReTreat - Home</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         html, body {
@@ -88,7 +88,6 @@ if ($conn->connect_error) {
         button {
             margin-right: 4px;
 			margin-bottom: 4px;
-			margin-top: ;
             padding: 1vw 2vw;
             border: none;
             background-color: #007bff;
@@ -187,6 +186,12 @@ if ($conn->connect_error) {
             z-index: 1000;
             transition: background-color 0.3s, color 0.3s; /* Added transition */
         }
+		
+		#logout {
+			position: absolute;
+			bottom: 10px;
+			left: 10px;
+		}
 
         /* Default h1 style for light mode */
         h1 {
@@ -198,6 +203,7 @@ if ($conn->connect_error) {
 
 <body>
 
+<button id="logout" onclick="logout()">Logout</div>
 <button id="mode-toggle" onclick="toggleMode()">🌙</button>
 
 <div class="container">
@@ -220,6 +226,10 @@ let offset = 0;
 const limit = 10;
 let loading = false;
 let allPostsLoaded = false;
+
+function logout() {
+	window.location.href = 'logout.php';
+}
 
 function loadPosts() {
     if (loading || allPostsLoaded) return;
