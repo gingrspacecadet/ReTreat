@@ -176,7 +176,6 @@ if ($conn->connect_error) {
             position: absolute;
             top: 10px;
             left: 10px;
-            background-color: #007bff;
             color: white;
             padding: 10px;
             border: none;
@@ -204,7 +203,7 @@ if ($conn->connect_error) {
 <body>
 
 <button id="logout" onclick="logout()">Logout</div>
-<button id="mode-toggle" onclick="toggleMode()">🌙</button>
+<button id="mode-toggle" onclick="toggleMode()"> ☽ </button>
 
 <div class="container">
     <div class="post-box">
@@ -316,9 +315,9 @@ function toggleMode() {
     document.body.classList.toggle("dark-mode");
     const modeButton = document.getElementById("mode-toggle");
     if (document.body.classList.contains("dark-mode")) {
-        modeButton.innerHTML = "🌞"; // Switch to sun icon for light mode
+        modeButton.innerHTML = " ☼ "; // Switch to sun icon for light mode
     } else {
-        modeButton.innerHTML = "🌙"; // Switch to moon icon for dark mode
+        modeButton.innerHTML = " ☽ "; // Switch to moon icon for dark mode
     }
 }
 </script>
