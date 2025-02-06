@@ -77,7 +77,7 @@ if ($conn->connect_error) {
 		}
 		
 		textarea {
-			width: 96.3%;
+			width: 96.6%;
             height: 10vh;
             padding: 1vw;
             border: 1px solid #ccc;
