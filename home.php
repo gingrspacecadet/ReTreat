@@ -68,8 +68,16 @@ if ($conn->connect_error) {
             transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Added transition */
         }
 
-        textarea {
-            width: 97%;
+		.textarea {
+			margin-top: 4px;
+			margin-left: 4px;
+			margin-right: 4px;
+			text-align: center;
+			resize: none;
+		}
+		
+		textarea {
+			width: 96.3%;
             height: 10vh;
             padding: 1vw;
             border: 1px solid #ccc;
@@ -194,7 +202,9 @@ if ($conn->connect_error) {
 
 <div class="container">
     <div class="post-box">
-        <textarea id="postContent" placeholder="What's on your mind?"></textarea><br>
+        <div class="textarea">
+			<textarea id="postContent" placeholder="What's on your mind?"></textarea><br>
+		</div>
         <button onclick="submitPost()">Post</button>
     </div>
 
