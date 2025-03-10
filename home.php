@@ -203,7 +203,7 @@ if ($conn->connect_error) {
 <body>
 
 <button id="logout" onclick="logout()">Logout</div>
-<button id="mode-toggle" onclick="toggleMode()"><img src="https://cdn.discordapp.com/attachments/1335983665242574970/1337121695089033268/moon-removebg-preview.png?ex=67a64b1e&is=67a4f99e&hm=0d915e720f153664b0bffad01731620d276464d9222b70143eea43250a8ee201&" width="40" height="40"></button>
+<button id="mode-toggle" onclick="toggleMode()"><img src="http://localhost/retreat/assets/moon.png" width="40" height="40"></button>
 
 <div class="container">
     <div class="post-box">
@@ -273,6 +273,17 @@ $(document).ready(function() {
     });
 });
 
+function formatDate(date) {
+    let d = new Date(date);
+    let year = d.getFullYear();
+    let month = ("0" + (d.getMonth() + 1)).slice(-2); // Add leading zero if necessary
+    let day = ("0" + d.getDate()).slice(-2); // Add leading zero if necessary
+    let hours = ("0" + d.getHours()).slice(-2); // Add leading zero if necessary
+    let minutes = ("0" + d.getMinutes()).slice(-2); // Add leading zero if necessary
+    let seconds = ("0" + d.getSeconds()).slice(-2); // Add leading zero if necessary
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
+
 function submitPost() {
     let content = $("#postContent").val().trim();
     if (content === "") {
@@ -281,33 +292,40 @@ function submitPost() {
     }
 
     $.post("save_message.php", { content: content }, function(response) {
-        let data = JSON.parse(response);
-        if (data.error) {
-            $("#message").text(data.error).css("color", "red");
+        // Check if the response is already a parsed object
+        console.log(response);  // Log the raw response to ensure it's in the expected format
+
+        // If response is already a parsed object, no need to use JSON.parse
+        // Just directly use the response object
+        if (response.error) {
+            $("#message").text(response.error).css("color", "red");
         } else {
-            $("#message").text(data.success).css("color", "green");
+            $("#message").text(response.success).css("color", "green");
 
             // Replace newline characters with <br> tags
-            let formattedContent = data.content.replace(/\n/g, '<br>');
+            let formattedContent = response.content.replace(/\n/g, '<br>');
 
             // Convert the GMT time to the user's local time
-            let postTime = new Date(data.time + " GMT"); // Add " GMT" to ensure it's treated as GMT
-            let localTime = postTime.toLocaleString(); // Convert to local time
+            let postTime = new Date(response.time + " GMT"); // Add " GMT" to ensure it's treated as GMT
+            let localTime = formatDate(postTime); // Format the date and time as YYYY-MM-DD HH:mm:ss
 
             // Create a new post with formatted content and time
             let newPost = `
                 <div class='post'>
-                    <p><strong>${data.user}:</strong></p>
+                    <p><strong>${response.user}</strong> <strong>(${localTime}):</strong></p>
                     <p>${formattedContent}</p>
-                    <p><small>Posted at ${localTime}</small></p>
                 </div>
             `;
             $("#posts").prepend(newPost);
+
+            // Only load new posts AFTER successful submission
+            loadPosts();
         }
     }).fail(function() {
         $("#message").text("Failed to post message.").css("color", "red");
     });
 
+    // Clear the content input after submission
     $("#postContent").val("");
 }
 
@@ -315,9 +333,9 @@ function toggleMode() {
     document.body.classList.toggle("dark-mode");
     const modeButton = document.getElementById("mode-toggle");
     if (document.body.classList.contains("dark-mode")) {
-        modeButton.innerHTML = '<img src="https://cdn.discordapp.com/attachments/1335983665242574970/1337121694845894696/sun-removebg-preview.png?ex=67a64b1e&is=67a4f99e&hm=c998977a0b8494a7ac01d780f508b3feb430109d319bdbc80a92b132279aa87e& width="40" height="40"></img>'; // Switch to sun icon for light mode
+        modeButton.innerHTML = '<img src="http://localhost/retreat/assets/sun.png" width="40" height="40"></img>'; // Switch to sun icon for light mode
     } else {
-        modeButton.innerHTML = '<img src="https://cdn.discordapp.com/attachments/1335983665242574970/1337121695089033268/moon-removebg-preview.png?ex=67a64b1e&is=67a4f99e&hm=0d915e720f153664b0bffad01731620d276464d9222b70143eea43250a8ee201& width="40" height="40"></img>'; // Switch to moon icon for dark mode
+        modeButton.innerHTML = '<img src="http://localhost/retreat/assets/moon.png" width="40" height="40"></img>'; // Switch to moon icon for dark mode
     }
 }
 </script>
