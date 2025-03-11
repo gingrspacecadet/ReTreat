@@ -14,6 +14,9 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Sanitize the session user value to prevent SQL injection
+$user = mysqli_real_escape_string($conn, $_SESSION['user']);
+
 // Ensure the user is logged in
 if (!isset($_SESSION['user'])) {
     die("You must be logged in to update your data.");
@@ -24,26 +27,39 @@ $logged_in_user = $_SESSION['user'];
 
 $message = ""; // Store status message
 
+// Query the database for the user's accent color
+$query = "SELECT accentcolour FROM users WHERE username = '$user'";
+$result = mysqli_query($conn, $query);
+
+// Check if the query was successful
+if ($result) {
+    $row = mysqli_fetch_assoc($result);
+    $accentColour = $row['accentcolour']; // Get the accentcolour value
+} else {
+    // Handle error (e.g., no user found or query failed)
+    $accentColour = "#007bff"; // Default color
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $new_value = $_POST['new_value']; // New value for the accent color
 
     // Input validation: Must be exactly 6 ASCII characters
-    if (preg_match('/^[\x20-\x7E]{6}$/', $new_value)) {
-        // Prepare the SQL statement
-        $stmt = $conn->prepare("UPDATE users SET accentcolour = ? WHERE username = ?");
-        $stmt->bind_param("ss", $new_value, $logged_in_user);
-
-        // Execute the statement
-        if ($stmt->execute()) {
-            $message = "Accent color updated successfully!";
-        } else {
-            $message = "Error updating record: " . $stmt->error;
-        }
-
-        $stmt->close();
-    } else {
-        $message = "Invalid input! Must be exactly 6 ASCII characters.";
-    }
+	if (preg_match('/^[0-9A-Fa-f]{6}$/', $new_value)) {
+		// Prepare the SQL statement
+		$stmt = $conn->prepare("UPDATE users SET accentcolour = ? WHERE username = ?");
+		$stmt->bind_param("ss", $new_value, $logged_in_user);
+	
+		// Execute the statement
+		if ($stmt->execute()) {
+			$message = "Accent color updated successfully!";
+		} else {
+			$message = "Error updating record: " . $stmt->error;
+		}
+		header("Location: " . $_SERVER['PHP_SELF']);
+		$stmt->close();
+	} else {
+		$message = "Invalid input! Must be exactly 6 characters long and a valid hex code (0-9, a-f).";
+	}
 }
 
 $conn->close();
@@ -105,7 +121,7 @@ $conn->close();
         button {
             padding: 1vw 2vw;
             border: none;
-            background-color: #007bff;
+            background-color: #<?php echo $accentColour; ?>;
             color: #ffffff;
             cursor: pointer;
             border-radius: 5px;
@@ -119,9 +135,9 @@ $conn->close();
 
         .message {
             margin-top: 15px;
-            font-size: 14px;
+            font-size: 20px;
             font-weight: bold;
-            color: green;
+            color: red;
         }
 
         /* Dark Mode Styles */
@@ -177,7 +193,7 @@ $conn->close();
     </style>
 </head>
 <body>
-    <button id="mode-toggle">Toggle Dark Mode</button>
+    <button id="mode-toggle" onclick="reload()">Toggle Dark Mode</button>
 	<button id="home" onclick="home()">Home</button>
 	
     <div class="container">
@@ -204,6 +220,7 @@ $conn->close();
 		function home() {
 			window.location.href = 'home.php';
 		}
+		
     </script>
 </body>
 </html>

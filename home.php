@@ -1,16 +1,37 @@
 <?php
 session_start();
 
+// Check if the user is logged in
 if (!isset($_SESSION["user"])) {
     header("Location: index.php");
     exit();
 }
 
+// Connect to the database
 $conn = new mysqli("localhost", "root", "", "mydatabase");
+
+// Check for connection errors
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+
+// Sanitize the session user value to prevent SQL injection
+$user = mysqli_real_escape_string($conn, $_SESSION['user']);
+
+// Query the database for the user's accent color
+$query = "SELECT accentcolour FROM users WHERE username = '$user'";
+$result = mysqli_query($conn, $query);
+
+// Check if the query was successful
+if ($result) {
+    $row = mysqli_fetch_assoc($result);
+    $accentColour = $row['accentcolour']; // Get the accentcolour value
+} else {
+    // Handle error (e.g., no user found or query failed)
+    $accentColour = "#007bff"; // Default color
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -102,7 +123,7 @@ if ($conn->connect_error) {
 			margin-bottom: 4px;
 			padding: 1vw 2vw;
 			border: none;
-			background-color: #007bff;
+			background-color: #<?php echo $accentColour; ?>;
 			color: #f4f4f4;
 			cursor: pointer;
 			border-radius: 5px;
