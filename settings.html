@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Accent Colour</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            color: #2e2e2e;
+        }
+
+        .container {
+            width: 50vw;
+            height: auto;
+            max-width: 500px;
+            min-width: 300px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #ffffff;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 1vw 2vw;
+            border: none;
+            background-color: #007bff; /* Default blue */
+            color: #ffffff;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .message {
+            margin-top: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            color: red;
+        }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #181818;
+            color: #f4f4f4;
+        }
+
+        body.dark-mode .container {
+            background-color: #242424;
+            box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode input {
+            background-color: #333;
+            color: #fff;
+            border: 1px solid #555;
+        }
+
+        body.dark-mode button {
+            background-color: #555;
+            color: #fff;
+            border: 1px solid #777;
+        }
+
+        body.dark-mode button:hover {
+            background-color: #777;
+        }
+
+        /* Toggle Button */
+        #mode-toggle {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        #mode-toggle:hover {
+            background-color: #0056b3;
+        }
+		
+		#home {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+		}
+		
+    </style>
+</head>
+<body>
+    <button id="mode-toggle" onclick="reload()">Toggle Dark Mode</button>
+	<button id="home" onclick="home()">Home</button>
+	
+    <div class="container">
+        <h1>Update Accent Colour</h1>
+        <form method="POST" id="colorForm">
+            <input type="text" id="new_value" maxlength="6" placeholder="Enter Hex Code (No #)" required>
+            <button type="submit" id="submit">Update</button>
+        </form>
+        <div class="message" id="message"></div>
+    </div>
+
+    <script>
+        // Function to get the cookie value by name
+        function getCookie(name) {
+            let cookieArr = document.cookie.split("; ");
+            for (let i = 0; i < cookieArr.length; i++) {
+                let cookiePair = cookieArr[i].split("=");
+                if (name == cookiePair[0]) {
+                    return decodeURIComponent(cookiePair[1]);
+                }
+            }
+            return null;
+        }
+
+        // Function to set a cookie
+        function setCookie(name, value, days) {
+            const d = new Date();
+            d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + d.toUTCString();
+            document.cookie = name + "=" + encodeURIComponent(value) + ";" + expires + ";path=/";
+        }
+
+        // Retrieve and apply the saved accent color from cookie
+        const savedAccentColor = getCookie("accentcolour");
+        if (savedAccentColor) {
+            document.documentElement.style.setProperty("--accent-color", savedAccentColor);
+            document.getElementById("mode-toggle").style.backgroundColor = `#${savedAccentColor}`;
+			document.getElementById("home").style.backgroundColor = `#${savedAccentColor}`;
+			document.getElementById("submit").style.backgroundColor = `#${savedAccentColor}`;			// Update Home button
+        }
+
+        // Handle form submission to update the accent color
+        document.getElementById("colorForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const newColor = document.getElementById("new_value").value;
+
+            // Validate hex color format (6 characters, no #)
+            const hexPattern = /^[0-9A-Fa-f]{6}$/;
+            if (hexPattern.test(newColor)) {
+                setCookie("accentcolour", newColor, 365);  // Save color in cookie for 1 year
+                document.documentElement.style.setProperty("--accent-color", newColor);
+                document.querySelector("button").style.backgroundColor = `#${newColor}`; // Update the 'Update' button color
+                document.getElementById("home").style.backgroundColor = `#${newColor}`;  // Update Home button color
+                document.getElementById("message").textContent = "Accent color updated successfully!";
+            } else {
+                document.getElementById("message").textContent = "Invalid hex code! Must be exactly 6 characters.";
+            }
+        });
+
+        // Dark Mode Toggle Logic
+        const modeToggle = document.getElementById("mode-toggle");
+        modeToggle.addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+            localStorage.setItem("dark-mode", document.body.classList.contains("dark-mode"));
+        });
+
+        // Load saved dark mode preference
+        if (localStorage.getItem("dark-mode") === "true") {
+            document.body.classList.add("dark-mode");
+        }
+
+        function home() {
+            window.location.href = 'home.php';
+        }
+    </script>
+</body>
+</html>

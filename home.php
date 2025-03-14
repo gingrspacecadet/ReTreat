@@ -272,7 +272,7 @@ let loading = false;
 let allPostsLoaded = false;
 
 function settings() {
-	window.location.href = 'settings.php';
+	window.location.href = 'settings.html';
 }
 
 function logout() {
