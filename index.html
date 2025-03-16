@@ -45,7 +45,7 @@
 <script>
   document.getElementById('authForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    
+
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
@@ -58,12 +58,12 @@
     });
 
     const data = await response.json();
-    
+
     if (response.ok && data.success) {
-      // Redirect to settings page if login is successful
+      // After a successful login, redirect to the settings page
       window.location.href = 'https://retreat-4vv.pages.dev/settings.html';
     } else {
-      // Display the error message
+      // Handle errors if login fails
       document.getElementById('status').textContent = 'Error: ' + (data.error || data.message);
     }
   });
