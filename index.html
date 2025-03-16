@@ -60,7 +60,7 @@
     const data = await response.json();
 
     if (response.ok && data.success) {
-      window.location.href = https://retreat-4vv.pages.dev/settings.html;
+      window.location.href = "https://retreat-4vv.pages.dev/settings.html";
     } else {
       // Handle errors if login fails
       document.getElementById('status').textContent = 'Error: ' + (data.error || data.message);
