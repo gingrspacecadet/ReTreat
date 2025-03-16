@@ -206,7 +206,7 @@
 
 <button id="settings" onclick="settings()">Settings</button>
 <button id="logout" onclick="logout()">Logout</button>
-<button id="mode-toggle" onclick="toggleMode()"><img src="http://localhost/retreat/assets/moon.png" width="40" height="40"></button>
+<button id="mode-toggle" onclick="toggleMode()"><img src="https://retreat-4vv.pages.dev/assets/moon.png" width="40" height="40"></button>
 
 <div class="container">
     <div class="post-box">
@@ -345,10 +345,10 @@ function toggleMode() {
     const modeButton = document.getElementById("mode-toggle");
 
     if (document.body.classList.contains("dark-mode")) {
-        modeButton.innerHTML = '<img src="http://localhost/retreat/assets/sun.png" width="40" height="40">';
+        modeButton.innerHTML = '<img src="https://retreat-4vv.pages.dev/assets/sun.png" width="40" height="40">';
         localStorage.setItem("dark-mode", "true");
     } else {
-        modeButton.innerHTML = '<img src="http://localhost/retreat/assets/moon.png" width="40" height="40">';
+        modeButton.innerHTML = '<img src="https://retreat-4vv.pages.dev/assets/moon.png" width="40" height="40">';
         localStorage.setItem("dark-mode", "false");
     }
 }
