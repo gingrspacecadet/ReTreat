@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ReTreat - Home</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="https://retreat-4vv.pages.dev/styles.css">
+    <link rel="stylesheet" href="https://retreat-4vv.pages.dev/home-style.css">
 </head>
 
 <body>
@@ -162,9 +162,9 @@ function toggleMode() {
 document.addEventListener("DOMContentLoaded", function () {
     if (localStorage.getItem("dark-mode") === "true") {
         document.body.classList.add("dark-mode");
-        document.getElementById("mode-toggle").innerHTML = '<img src="https://retreat-4vv.pages.dev/assets/sun.png" width="40" height="40">';
+        document.getElementById("mode-toggle").innerHTML = '<img src="http://localhost/retreat/assets/sun.png" width="40" height="40">';
     } else {
-        document.getElementById("mode-toggle").innerHTML = '<img src="https://retreat-4vv.pages.dev/assets/moon.png" width="40" height="40">';
+        document.getElementById("mode-toggle").innerHTML = '<img src="http://localhost/retreat/assets/moon.png" width="40" height="40">';
     }
 });
 </script>
