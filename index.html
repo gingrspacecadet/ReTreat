@@ -60,7 +60,7 @@
     const data = await response.json();
 
     if (response.ok && data.success) {
-      // After a successful login, redirect to the settings page
+      // Client-side redirection after successful login
       window.location.href = 'https://retreat-4vv.pages.dev/settings.html';
     } else {
       // Handle errors if login fails
