@@ -297,42 +297,47 @@ async function loadPosts() {
 }
 
 // Function to submit a new post to the Worker API
-async function submitPost() {
+function submitPost() {
     let content = document.getElementById("postContent").value.trim();
+    let username = getCookie("username"); // Retrieve username from cookie
+
+    if (!username) {
+        document.getElementById("message").innerText = "You must be logged in to post!";
+        document.getElementById("message").style.color = "red";
+        return;
+    }
+
     if (content === "") {
         document.getElementById("message").innerText = "Post cannot be empty!";
         document.getElementById("message").style.color = "red";
         return;
     }
 
-    try {
-        const response = await fetch("https://post.retreat.workers.dev", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ content }),
-        });
-
-        const result = await response.json();
-        if (response.ok) {
+    fetch("https://post.retreat.workers.dev", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, content }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
             document.getElementById("message").innerText = "Post successful!";
             document.getElementById("message").style.color = "green";
 
-            let newPost = `<div class='post'><p><strong>You:</strong></p><p>${content}</p></div>`;
+            let newPost = `<div class='post'><p><strong>${username}:</strong></p><p>${content}</p></div>`;
             document.getElementById("posts").insertAdjacentHTML('afterbegin', newPost);
-
-            document.getElementById("postContent").value = "";
-            loadPosts(); // Refresh posts
         } else {
-            document.getElementById("message").innerText = "Error: " + result.error;
+            document.getElementById("message").innerText = "Error: " + data.error;
             document.getElementById("message").style.color = "red";
         }
-    } catch (error) {
-        console.error(error);
-        document.getElementById("message").innerText = "Error submitting post.";
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        document.getElementById("message").innerText = "Server error.";
         document.getElementById("message").style.color = "red";
-    }
+    });
+
+    document.getElementById("postContent").value = "";
 }
 
 function toggleMode() {
