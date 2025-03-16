@@ -140,7 +140,7 @@ function submitPost() {
     })
     .catch(error => {
         console.error("Error:", error);
-        document.getElementById("message").innerText = "Server error.";
+        document.getElementById("message").innerText = error;
         document.getElementById("message").style.color = "red";
     });
 
