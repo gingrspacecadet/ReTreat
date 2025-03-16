@@ -59,10 +59,12 @@
 
     const data = await response.json();
     
-    if (data.success) {
-      document.getElementById('status').textContent = 'Success: ' + data.message;
+    if (response.ok && data.success) {
+      // Redirect to settings page if login is successful
+      window.location.href = 'https://retreat-4vv.pages.dev/settings.html';
     } else {
-      document.getElementById('status').textContent = 'Error: ' + data.message;
+      // Display the error message
+      document.getElementById('status').textContent = 'Error: ' + (data.error || data.message);
     }
   });
 </script>
