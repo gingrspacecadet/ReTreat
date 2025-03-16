@@ -60,13 +60,7 @@
     const data = await response.json();
 
     if (response.ok && data.success) {
-      if (data.redirectTo) {
-        // Handle redirect on the client-side
-        window.location.href = data.redirectTo;
-      } else {
-        // If there's no redirect URL, just show the success message
-        document.getElementById('status').textContent = 'Success: ' + data.message;
-      }
+      window.location.href = https://retreat-4vv.pages.dev/settings.html;
     } else {
       // Handle errors if login fails
       document.getElementById('status').textContent = 'Error: ' + (data.error || data.message);
