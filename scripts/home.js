@@ -23,7 +23,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Load initial posts and attach scroll listener
     loadPosts();
-    window.addEventListener("scroll", handleScroll);
+    console.log("Scroll event listener attached!");
+	window.addEventListener("scroll", handleScroll);
 });
 
 async function loadPosts() {
@@ -86,16 +87,12 @@ async function loadPosts() {
 }
 
 function handleScroll() {
-	window.addEventListener("scroll", function () {
-		const scrollPosition = window.innerHeight + window.scrollY;
-		const threshold = document.documentElement.scrollHeight - 50; // Adjusted threshold
-	
-		console.log("Scroll Position:", scrollPosition);
-		console.log("Document Height:", document.documentElement.scrollHeight);
-	
-		if (scrollPosition >= threshold) {
-			console.log("Threshold reached, loading more posts...");
-			loadPosts();
-		}
-	});
+    console.log("handleScroll() triggered!");
+    const scrollPosition = window.innerHeight + window.scrollY;
+    const threshold = document.documentElement.scrollHeight - 50;
+
+    if (scrollPosition >= threshold) {
+        console.log("Reached the bottom, calling loadPosts...");
+        loadPosts();
+    }
 }
