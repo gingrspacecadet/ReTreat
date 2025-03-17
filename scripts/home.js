@@ -24,9 +24,9 @@ document.addEventListener("DOMContentLoaded", function () {
     // Load initial posts and attach scroll listener
     loadPosts();
     console.log("Scroll event listener attached!");
-	document.getElementById("posts").addEventListener("scrollend", (event) => {
-	    loadPosts();
-	});
+    document.getElementById("posts").addEventListener("scrollend", (event) => {
+    loadPosts();
+    });
 });
 
 async function loadPosts() {
