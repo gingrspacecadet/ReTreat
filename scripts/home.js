@@ -81,9 +81,11 @@ async function loadPosts() {
         console.error("Error:", error);
         loadingIndicator.innerText = "Failed to load posts.";
     } finally {
-        loading = false;
-        loadingIndicator.style.display = "none";
-    }
+		console.log("Resetting loading state...");
+		loading = false;
+		document.getElementById("loading").style.display = "none";
+	}
+
 }
 
 function handleScroll() {
