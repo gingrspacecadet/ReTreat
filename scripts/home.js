@@ -14,11 +14,16 @@ function getCookie(name) {
     return null;
 }
 
-const scrollableArea = document.getElementById("posts");
-scrollableArea.addEventListener("scroll", () => {
-    console.log("Scrolled the specific area!");
+document.addEventListener("DOMContentLoaded", function () {
+    const postsContainer = document.getElementById("posts");
+    if (postsContainer) {
+        postsContainer.addEventListener("scroll", () => {
+            console.log("Scroll event detected!");
+        });
+    } else {
+        console.error("Element with ID 'posts' not found.");
+    }
 });
-
 
 const accentColor = getCookie("accentcolour") ? `#${getCookie("accentcolour")}` : "#007bff";
 
