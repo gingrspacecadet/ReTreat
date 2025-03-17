@@ -14,6 +14,10 @@ function getCookie(name) {
     return null;
 }
 
+window.addEventListener("scroll", function () {
+    console.log("Scrolling detected!");
+});
+
 const accentColor = getCookie("accentcolour") ? `#${getCookie("accentcolour")}` : "#007bff";
 
 document.addEventListener("DOMContentLoaded", function () {
