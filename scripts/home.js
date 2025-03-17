@@ -89,6 +89,7 @@ async function loadPosts() {
 }
 
 async function handleScroll() {
+    console.log("scroll");
     const scrollPosition = window.innerHeight + window.scrollY;
     const threshold = document.documentElement.scrollHeight - 50;
 
