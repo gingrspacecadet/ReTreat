@@ -160,6 +160,8 @@
             font-size: 20px;
             z-index: 1000;
             transition: background-color 0.3s, color 0.3s;
+            width:60px;
+	    height:60px;
         }
 
         #logout {
