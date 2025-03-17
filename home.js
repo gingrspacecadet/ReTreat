@@ -4,8 +4,8 @@ let loading = false;
 let allPostsLoaded = false;
 
 function getCookie(name) {
-    const cookieArr = document.cookie.split("; ");
-    for (const cookie of cookieArr) {
+    const cookies = document.cookie.split("; ");
+    for (const cookie of cookies) {
         const [key, value] = cookie.split("=");
         if (name === key) {
             return decodeURIComponent(value);
@@ -20,9 +20,9 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll("button").forEach(button => {
         button.style.backgroundColor = accentColor;
     });
-    loadPosts();
 
-    // Handle infinite scrolling only when DOM is loaded
+    // Load initial posts and attach scroll listener
+    loadPosts();
     window.addEventListener("scroll", handleScroll);
 });
 
@@ -30,20 +30,21 @@ async function loadPosts() {
     if (loading || allPostsLoaded) return;
 
     loading = true;
-    document.getElementById("loading").style.display = "block";
+    const loadingIndicator = document.getElementById("loading");
+    loadingIndicator.style.display = "block";
 
     try {
         const response = await fetch(`https://getposts.retreat.workers.dev/?offset=${offset}&limit=${limit}`);
         const data = await response.json();
 
         if (response.ok && data.success) {
+            const postsContainer = document.getElementById("posts");
+
             if (data.posts.length === 0) {
                 allPostsLoaded = true;
-                document.getElementById("loading").innerText = "No more posts.";
+                loadingIndicator.innerText = "No more posts.";
                 return;
             }
-
-            const postsContainer = document.getElementById("posts");
 
             data.posts.forEach(post => {
                 const formattedContent = post.content.replace(/\n/g, "<br>");
@@ -61,16 +62,17 @@ async function loadPosts() {
         }
     } catch (error) {
         console.error("Error:", error);
-        document.getElementById("loading").innerText = "Failed to load posts.";
+        loadingIndicator.innerText = "Failed to load posts.";
     } finally {
         loading = false;
-        document.getElementById("loading").style.display = "none";
+        loadingIndicator.style.display = "none";
     }
 }
 
 function handleScroll() {
+    // Check if near the bottom of the page
     const scrollPosition = window.innerHeight + window.scrollY;
-    const threshold = document.body.offsetHeight - 100;
+    const threshold = document.documentElement.scrollHeight - 100;
 
     if (scrollPosition >= threshold) {
         loadPosts();
