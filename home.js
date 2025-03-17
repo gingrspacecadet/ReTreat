@@ -70,12 +70,14 @@ async function loadPosts() {
 }
 
 function handleScroll() {
-    console.log("Scroll event detected!"); // Debugging line
+    console.log("Scroll Position:", window.innerHeight + window.scrollY); // Debugging line
+    console.log("Document Height:", document.documentElement.scrollHeight); // Debugging line
+
     const scrollPosition = window.innerHeight + window.scrollY;
     const threshold = document.documentElement.scrollHeight - 100;
 
     if (scrollPosition >= threshold) {
-        console.log("Reached the bottom, loading posts..."); // Debugging line
+        console.log("Threshold reached!");
         loadPosts();
     }
 }
