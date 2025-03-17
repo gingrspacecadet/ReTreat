@@ -27,7 +27,15 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 async function loadPosts() {
-    if (loading || allPostsLoaded) return;
+    if (loading) {
+        console.log("Already loading posts, skipping...");
+        return;
+    }
+    if (allPostsLoaded) {
+        console.log("All posts are loaded, no more requests.");
+        return;
+    }
+    console.log("Loading new posts...");
 
     loading = true;
     const loadingIndicator = document.getElementById("loading");
@@ -38,14 +46,13 @@ async function loadPosts() {
         const data = await response.json();
 
         if (response.ok && data.success) {
-            const postsContainer = document.getElementById("posts");
-
             if (data.posts.length === 0) {
                 allPostsLoaded = true;
                 loadingIndicator.innerText = "No more posts.";
                 return;
             }
 
+            const postsContainer = document.getElementById("posts");
             data.posts.forEach(post => {
                 const formattedContent = post.content.replace(/\n/g, "<br>");
                 const newPost = document.createElement("div");
@@ -56,7 +63,7 @@ async function loadPosts() {
                 postsContainer.appendChild(newPost);
             });
 
-            offset += limit; // Update offset for next batch
+            offset += limit; // Increment offset for the next batch
         } else {
             throw new Error("Failed to fetch posts.");
         }
