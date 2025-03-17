@@ -8,6 +8,7 @@ html, body {
 	justify-content: center;
 	align-items: center;
 	transition: background-color 0.3s, color 0.3s;
+	overflow: visible;
 }
 
 body {
