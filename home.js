@@ -42,8 +42,15 @@ async function loadPosts() {
     loadingIndicator.style.display = "block";
 
     try {
-        const response = await fetch(`https://getposts.retreat.workers.dev/?offset=${offset}&limit=${limit}`);
+        console.log(`Attempting to fetch: offset=${offset}, limit=${limit}`);
+		const response = await fetch(`https://getposts.retreat.workers.dev/?offset=${offset}&limit=${limit}`);
+		console.log("Fetch response status:", response.status);
+
         const data = await response.json();
+		console.log("Response data:", data);
+		console.log("data.success:", data.success);
+		console.log("data.posts:", data.posts);
+		console.log("Number of posts:", data.posts ? data.posts.length : "undefined");
 
         if (response.ok && data.success) {
             if (data.posts.length === 0) {
@@ -54,14 +61,16 @@ async function loadPosts() {
 
             const postsContainer = document.getElementById("posts");
             data.posts.forEach(post => {
-                const formattedContent = post.content.replace(/\n/g, "<br>");
-                const newPost = document.createElement("div");
-                newPost.className = "post";
-                newPost.innerHTML = `
-                    <p><strong>${post.username}:</strong></p>
-                    <p>${formattedContent}</p>`;
-                postsContainer.appendChild(newPost);
-            });
+				console.log("Rendering post:", post);
+				const formattedContent = post.content.replace(/\n/g, "<br>");
+				const newPost = document.createElement("div");
+				newPost.className = "post";
+				newPost.innerHTML = `
+					<p><strong>${post.username}:</strong></p>
+					<p>${formattedContent}</p>`;
+				document.getElementById("posts").appendChild(newPost);
+			});
+
 
             offset += limit; // Increment offset for the next batch
         } else {
