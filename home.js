@@ -4,11 +4,11 @@ let loading = false;
 let allPostsLoaded = false;
 
 function getCookie(name) {
-    let cookieArr = document.cookie.split("; ");
-    for (let i = 0; i < cookieArr.length; i++) {
-        let cookiePair = cookieArr[i].split("=");
-        if (name === cookiePair[0]) {
-            return decodeURIComponent(cookiePair[1]);
+    const cookieArr = document.cookie.split("; ");
+    for (const cookie of cookieArr) {
+        const [key, value] = cookie.split("=");
+        if (name === key) {
+            return decodeURIComponent(value);
         }
     }
     return null;
@@ -21,10 +21,14 @@ document.addEventListener("DOMContentLoaded", function () {
         button.style.backgroundColor = accentColor;
     });
     loadPosts();
+
+    // Handle infinite scrolling only when DOM is loaded
+    window.addEventListener("scroll", handleScroll);
 });
 
 async function loadPosts() {
     if (loading || allPostsLoaded) return;
+
     loading = true;
     document.getElementById("loading").style.display = "block";
 
@@ -39,13 +43,19 @@ async function loadPosts() {
                 return;
             }
 
+            const postsContainer = document.getElementById("posts");
+
             data.posts.forEach(post => {
-                let formattedContent = post.content.replace(/\n/g, "<br>");
-                let newPost = `<div class='post'><p><strong>${post.username}:</strong></p><p>${formattedContent}</p></div>`;
-                document.getElementById("posts").insertAdjacentHTML('beforeend', newPost);
+                const formattedContent = post.content.replace(/\n/g, "<br>");
+                const newPost = document.createElement("div");
+                newPost.className = "post";
+                newPost.innerHTML = `
+                    <p><strong>${post.username}:</strong></p>
+                    <p>${formattedContent}</p>`;
+                postsContainer.appendChild(newPost);
             });
 
-            offset += limit;
+            offset += limit; // Update offset for next batch
         } else {
             throw new Error("Failed to fetch posts.");
         }
@@ -58,8 +68,11 @@ async function loadPosts() {
     }
 }
 
-window.addEventListener("scroll", function () {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+function handleScroll() {
+    const scrollPosition = window.innerHeight + window.scrollY;
+    const threshold = document.body.offsetHeight - 100;
+
+    if (scrollPosition >= threshold) {
         loadPosts();
     }
-});
+}
