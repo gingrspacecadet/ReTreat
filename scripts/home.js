@@ -14,17 +14,6 @@ function getCookie(name) {
     return null;
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    const postsContainer = document.getElementById("posts");
-    if (postsContainer) {
-        postsContainer.addEventListener("scroll", () => {
-            console.log("Scroll event detected!");
-        });
-    } else {
-        console.error("Element with ID 'posts' not found.");
-    }
-});
-
 const accentColor = getCookie("accentcolour") ? `#${getCookie("accentcolour")}` : "#007bff";
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -97,14 +86,16 @@ async function loadPosts() {
 }
 
 function handleScroll() {
-    console.log("Scroll Position:", window.innerHeight + window.scrollY); // Debugging line
-    console.log("Document Height:", document.documentElement.scrollHeight); // Debugging line
-
-    const scrollPosition = window.innerHeight + window.scrollY;
-    const threshold = document.documentElement.scrollHeight - 100;
-
-    if (scrollPosition >= threshold) {
-        console.log("Threshold reached!");
-        loadPosts();
-    }
+	window.addEventListener("scroll", function () {
+		const scrollPosition = window.innerHeight + window.scrollY;
+		const threshold = document.documentElement.scrollHeight - 50; // Adjusted threshold
+	
+		console.log("Scroll Position:", scrollPosition);
+		console.log("Document Height:", document.documentElement.scrollHeight);
+	
+		if (scrollPosition >= threshold) {
+			console.log("Threshold reached, loading more posts...");
+			loadPosts();
+		}
+	});
 }
