@@ -94,8 +94,11 @@ button {
 }
 
 .post {
-	padding: 2vh;
-	border-bottom: 1px solid #ddd;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #f9f9f9;
+    color: #333;
 }
 
 .post:last-child {
@@ -160,8 +163,6 @@ body.dark-mode h1 {
 	font-size: 20px;
 	z-index: 1000;
 	transition: background-color 0.3s, color 0.3s;
-	height: 60px;
-	width: 60px;
 }
 
 #logout {
@@ -180,4 +181,9 @@ body.dark-mode h1 {
 h1 {
 	color: #2e2e2e;
 	transition: color 0.3s;
+}
+
+#posts {
+    padding: 20px;
+    border: 1px solid #ddd;
 }
