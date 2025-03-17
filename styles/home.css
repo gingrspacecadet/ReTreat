@@ -160,6 +160,8 @@ body.dark-mode h1 {
 	font-size: 20px;
 	z-index: 1000;
 	transition: background-color 0.3s, color 0.3s;
+	height = 60px;
+	width = 60px;
 }
 
 #logout {
