@@ -14,9 +14,11 @@ function getCookie(name) {
     return null;
 }
 
-window.addEventListener("scroll", function () {
-    console.log("Scrolling detected!");
+const scrollableArea = document.getElementById("posts");
+scrollableArea.addEventListener("scroll", () => {
+    console.log("Scrolled the specific area!");
 });
+
 
 const accentColor = getCookie("accentcolour") ? `#${getCookie("accentcolour")}` : "#007bff";
 
