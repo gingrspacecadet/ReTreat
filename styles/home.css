@@ -89,11 +89,6 @@ button {
 	display: none;
 }
 
-.posts-container {
-	scrollbar-width: none;
-	-ms-overflow-style: none;
-}
-
 .post {
     border: 1px solid #ddd;
     padding: 10px;
