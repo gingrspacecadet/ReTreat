@@ -45,7 +45,7 @@ async function loadPosts() {
     document.getElementById("loading").style.display = "block";
 
     try {
-        const response = await fetch(`https://${baseDomain}getposts.workers.dev/?offset=${offset}&limit=${limit}`);
+        const response = await fetch(`https://${baseDomain}getposts.retreat.workers.dev/?offset=${offset}&limit=${limit}`);
         const data = await response.json();
 
         if (response.ok && data.success) {
@@ -123,10 +123,10 @@ function toggleMode() {
     const modeButton = document.getElementById("mode-toggle");
 
     if (document.body.classList.contains("dark-mode")) {
-        modeButton.innerHTML = '<img src="https://canary-ec4.pages.dev/assets/sun.png" width="40" height="40">';
+        modeButton.innerHTML = '<img src="/assets/sun.png" width="40" height="40">';
         localStorage.setItem("dark-mode", "true");
     } else {
-        modeButton.innerHTML = '<img src="https://canary-ec4.pages.dev/assets/moon.png" width="40" height="40">';
+        modeButton.innerHTML = '<img src="/assets/moon.png" width="40" height="40">';
         localStorage.setItem("dark-mode", "false");
     }
 }
@@ -134,8 +134,8 @@ function toggleMode() {
 document.addEventListener("DOMContentLoaded", function () {
     if (localStorage.getItem("dark-mode") === "true") {
         document.body.classList.add("dark-mode");
-        document.getElementById("mode-toggle").innerHTML = '<img src="https://canary-ec4.pages.dev/assets/sun.png" width="40" height="40">';
+        document.getElementById("mode-toggle").innerHTML = '<img src="/assets/sun.png" width="40" height="40">';
     } else {
-        document.getElementById("mode-toggle").innerHTML = '<img src="https://canary-ec4.pages.dev/assets/moon.png" width="40" height="40">';
+        document.getElementById("mode-toggle").innerHTML = '<img src="/assets/moon.png" width="40" height="40">';
     }
 });
