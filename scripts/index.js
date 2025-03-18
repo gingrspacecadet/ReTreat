@@ -1,3 +1,7 @@
+const baseDomain = window.location.hostname.includes("canary-ec4") 
+  ? "canary" 
+  : "";
+
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById('authForm').addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -5,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
-    const response = await fetch('https://canarylogin.retreat.workers.dev', {
+    const response = await fetch('https://${baseDomain}login.retreat.workers.dev', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -17,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (response.ok && data.success) {
       document.cookie = `username=${encodeURIComponent(username)}; path=/; max-age=${12 * 60 * 60}; Secure; SameSite=Lax`;
-      window.location.href = "https://canary-ec4.pages.dev/home.html";
+      window.location.href = "/home.html";
     } else {
       document.getElementById('status').textContent = 'Error: ' + (data.error || data.message);
     }
