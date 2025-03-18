@@ -90,11 +90,10 @@ button {
 }
 
 .post {
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin: 10px 0;
-    background-color: #f9f9f9;
-    color: #333;
+    	padding: 10px;
+   	margin: 10px 0;
+   	background-color: #f9f9f9;
+  	color: #333;
 }
 
 .post:last-child {
@@ -180,6 +179,6 @@ h1 {
 }
 
 #posts {
-    padding: 20px;
-    border: 1px solid #ddd;
+    	padding: 20px;
+    	border: 1px solid #ddd;
 }
