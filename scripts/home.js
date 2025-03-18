@@ -2,6 +2,9 @@ let offset = 0;
 const limit = 10;
 let loading = false;
 let allPostsLoaded = false;
+const baseDomain = window.location.hostname.includes("canary-ec4") 
+  ? "canary" 
+  : "";
 
 // Function to get the cookie value by name
 function getCookie(name) {
@@ -42,7 +45,7 @@ async function loadPosts() {
     document.getElementById("loading").style.display = "block";
 
     try {
-        const response = await fetch(`https://canarygetposts.retreat.workers.dev/?offset=${offset}&limit=${limit}`);
+        const response = await fetch(`https://${baseDomain}getposts.workers.dev/?offset=${offset}&limit=${limit}`);
         const data = await response.json();
 
         if (response.ok && data.success) {
@@ -88,7 +91,7 @@ function submitPost() {
         return;
     }
 
-    fetch("https://canarycreatepost.retreat.workers.dev", {
+    fetch("https://${baseDomain}createpost.retreat.workers.dev", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, content }),
