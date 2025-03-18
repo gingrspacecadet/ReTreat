@@ -91,7 +91,7 @@ function submitPost() {
         return;
     }
 
-    fetch("https://${baseDomain}createpost.retreat.workers.dev", {
+    fetch(`https://${baseDomain}createpost.retreat.workers.dev`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, content }),
