@@ -112,6 +112,7 @@ button {
 	margin-top: 2vh;
 	font-size: 1.4vh;
 	font-weight: bold;
+	align-items: left;
 }
 
 /* Dark Mode Styles */
