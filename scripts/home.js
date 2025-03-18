@@ -131,8 +131,8 @@ function toggleMode() {
 document.addEventListener("DOMContentLoaded", function () {
     if (localStorage.getItem("dark-mode") === "true") {
         document.body.classList.add("dark-mode");
-        document.getElementById("mode-toggle").innerHTML = '<img src="https://canary-ec4.pages.dev/assets/sun.png" width="40" height="40">';
+        document.getElementById("mode-toggle").innerHTML = '<img src="https://retreat-4vv.pages.dev/assets/sun.png" width="40" height="40">';
     } else {
-        document.getElementById("mode-toggle").innerHTML = '<img src="https://canary-ec4.pages.dev/assets/moon.png" width="40" height="40">';
+        document.getElementById("mode-toggle").innerHTML = '<img src="https://retreat-4vv.pages.dev/assets/moon.png" width="40" height="40">';
     }
 });
