@@ -94,6 +94,7 @@ button {
    	margin: 10px 0;
    	background-color: #f9f9f9;
   	color: #333;
+	border-radius: 1vw;
 }
 
 .post:last-child {
