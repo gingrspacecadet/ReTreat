@@ -42,7 +42,7 @@ async function loadPosts() {
     document.getElementById("loading").style.display = "block";
 
     try {
-        const response = await fetch(`https://canarygetposts.retreat.workers.dev/?offset=${offset}&limit=${limit}`);
+        const response = await fetch(`https://getposts.retreat.workers.dev/?offset=${offset}&limit=${limit}`);
         const data = await response.json();
 
         if (response.ok && data.success) {
@@ -88,7 +88,7 @@ function submitPost() {
         return;
     }
 
-    fetch("https://canarycreatepost.retreat.workers.dev", {
+    fetch("https://createpost.retreat.workers.dev", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, content }),
@@ -120,10 +120,10 @@ function toggleMode() {
     const modeButton = document.getElementById("mode-toggle");
 
     if (document.body.classList.contains("dark-mode")) {
-        modeButton.innerHTML = '<img src="https://canary-ec4.pages.dev/assets/sun.png" width="40" height="40">';
+        modeButton.innerHTML = '<img src="https://retreat-4vv.pages.dev/assets/sun.png" width="40" height="40">';
         localStorage.setItem("dark-mode", "true");
     } else {
-        modeButton.innerHTML = '<img src="https://canary-ec4.pages.dev/assets/moon.png" width="40" height="40">';
+        modeButton.innerHTML = '<img src="https://retreat-4vv.pages.dev/assets/moon.png" width="40" height="40">';
         localStorage.setItem("dark-mode", "false");
     }
 }
