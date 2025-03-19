@@ -69,7 +69,7 @@ async function loadPosts() {
             }
 
             data.posts.forEach(post => {
-                let formattedContent = post.content.replace(/\n/g, "<br>");
+                let formattedContent = marked(post.content); // Parse and render Markdown
                 let newPost = `<div class='post'><p><strong>${post.username}:</strong></p><p>${formattedContent}</p></div>`;
                 document.getElementById("posts").innerHTML += newPost;
             });
@@ -115,7 +115,7 @@ function submitPost() {
             document.getElementById("message").innerText = "Post successful!";
             document.getElementById("message").style.color = "green";
 
-            let newPost = `<div class='post'><p><strong>${username}:</strong></p><p>${content}</p></div>`;
+            let newPost = `<div class='post'><p><strong>${username}:</strong></p><p>${marked(content)}</p></div>`; // Parse and render Markdown
             document.getElementById("posts").insertAdjacentHTML('afterbegin', newPost);
         } else {
             document.getElementById("message").innerText = "Error: " + data.error;
