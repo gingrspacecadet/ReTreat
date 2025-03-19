@@ -127,6 +127,7 @@ body.dark-mode .container {
 }
 
 body.dark-mode .post-box,
+body.dark-mode .post,
 body.dark-mode .posts-container,
 body.dark-mode textarea {
 	background-color: #181818;
