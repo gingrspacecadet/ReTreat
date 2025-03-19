@@ -127,7 +127,6 @@ body.dark-mode .container {
 }
 
 body.dark-mode .post-box,
-body.dark-mode .post,
 body.dark-mode .posts-container,
 body.dark-mode textarea {
 	background-color: #181818;
@@ -135,6 +134,13 @@ body.dark-mode textarea {
 	border-color: #555;
 	transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
+
+body.dark-mode .post {
+	background-color: #333;
+	color: #f4f4f4;
+	transition: background-color 0.3s, color 0.3s;
+}
+
 
 body.dark-mode button {
 	background-color: #333;
