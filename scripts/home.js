@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
     loadPosts(); // Load posts when the page loads
 
     // Load more posts when you scroll to the bottom
-    addEventListener("scrollend", (event) => {
+    document.getElementById("posts").addEventListener("scrollend", (event) => {
         loadPosts();
     });
 });
