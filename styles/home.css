@@ -144,7 +144,7 @@ body.dark-mode .post {
 
 body.dark-mode button {
 	background-color: #333;
-	color: #f4f4f4;
+	color: #181818;
 	border: none;
 	transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
