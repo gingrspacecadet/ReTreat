@@ -89,11 +89,12 @@ button {
 }
 
 .post {
-    	padding: 10px;
+	padding: 10px;
    	margin: 10px 0;
    	background-color: #f9f9f9;
   	color: #333;
 	border-radius: 1vw;
+	transition: background-color 0.3s, color 0.3s
 }
 
 .post:last-child {
@@ -134,9 +135,16 @@ body.dark-mode textarea {
 	transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
-body.dark-mode button {
+body.dark-mode .post {
 	background-color: #333;
 	color: #f4f4f4;
+	transition: background-color 0.3s, color 0.3s;
+}
+
+
+body.dark-mode button {
+	background-color: #333;
+	color: #181818;
 	border: none;
 	transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
@@ -159,6 +167,8 @@ body.dark-mode h1 {
 	font-size: 20px;
 	z-index: 1000;
 	transition: background-color 0.3s, color 0.3s;
+	width: 60px;
+	height: 60px;
 }
 
 #logout {
@@ -180,6 +190,5 @@ h1 {
 }
 
 #posts {
-    	padding: 20px;
-    	border: 1px solid #ddd;
+	padding: 20px;
 }
