@@ -18,7 +18,8 @@ body {
 
 .container {
 	width: 80vw;
-	height: 80vh;
+	height: calc(100vh - 20px); /* Adjust height to fit within the viewport */
+	overflow: hidden; /* Prevent overflow of the container */
 	display: flex;
 	flex-direction: column;
 	max-width: 1200px;
@@ -85,9 +86,9 @@ button {
 	padding: 2vh 2vw;
 	border-radius: 10px;
 	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-	margin-top: 2vh;
 	transition: height 0.3s;
-	height: calc(80vh - 12vh); /* Adjust height when post box is unfocused */
+	height: auto; /* Allow the height to adjust based on content */
+	max-height: calc(100vh - 20vh); /* Set a maximum height to allow scrolling */
 }
 
 .posts-container::-webkit-scrollbar {
