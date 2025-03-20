@@ -53,7 +53,7 @@ function logout() {
 
 // Function to check if a string is a valid base64 image
 function isBase64Image(str) {
-    const base64Pattern = /^data:image\/(png|jpeg|jpg|gif);base64,/;
+    const base64Pattern = /^data:image\/(png|jpeg|jpg|gif|webp);base64,/;
     return base64Pattern.test(str);
 }
 
