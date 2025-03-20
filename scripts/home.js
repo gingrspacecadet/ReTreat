@@ -36,6 +36,24 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("mode-toggle").innerHTML = '<img src="/assets/moon.png" width="40" height="40">';
     }
 
+    const postBox = document.getElementById("postContent");
+    const postButton = document.querySelector(".post-box button");
+    const postsContainer = document.getElementById("posts");
+
+    postBox.addEventListener("focus", () => {
+        postBox.style.height = "10vh";
+        postButton.style.display = "inline-block";
+        postsContainer.style.height = "calc(80vh - 20vh)";
+    });
+
+    postBox.addEventListener("blur", () => {
+        if (postBox.value.trim() === "") {
+            postBox.style.height = "4vh";
+            postButton.style.display = "none";
+            postsContainer.style.height = "calc(80vh - 14vh)";
+        }
+    });
+
     loadPosts(); // Load posts when the page loads
 
     // Load more posts when you scroll to the bottom
