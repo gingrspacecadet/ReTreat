@@ -57,6 +57,18 @@ function isBase64Image(str) {
     return base64Pattern.test(str);
 }
 
+// Function to check if a string contains a valid base64 image
+function containsBase64Image(str) {
+    const base64Pattern = /data:image\/(png|jpeg|jpg|gif|webp);base64,[A-Za-z0-9+/=]+/g;
+    return base64Pattern.test(str);
+}
+
+// Function to replace base64 image strings with <img> tags
+function replaceBase64Images(str) {
+    const base64Pattern = /data:image\/(png|jpeg|jpg|gif|webp);base64,[A-Za-z0-9+/=]+/g;
+    return str.replace(base64Pattern, match => `<img src="${match}" alt="Image" />`);
+}
+
 // Function to load posts from the Worker API
 async function loadPosts() {
     if (loading || allPostsLoaded) return;
@@ -75,13 +87,11 @@ async function loadPosts() {
             }
 
             data.posts.forEach(post => {
-                let formattedContent;
+                let formattedContent = markdown.toHTML(post.content); // Parse and render Markdown
 
-                // Check if the content is a base64 image and display it as an image
-                if (isBase64Image(post.content)) {
-                    formattedContent = `<img src="${post.content}" alt="Image" />`;
-                } else {
-                    formattedContent = markdown.toHTML(post.content); // Parse and render Markdown
+                // Check if the content contains a base64 image and replace it with an <img> tag
+                if (containsBase64Image(post.content)) {
+                    formattedContent = replaceBase64Images(formattedContent);
                 }
 
                 let newPost = `<div class='post'><p><strong>${post.username}:</strong></p><p>${formattedContent}</p></div>`;
