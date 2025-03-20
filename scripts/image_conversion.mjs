@@ -31,7 +31,7 @@ export async function convertToWebPBase64(file) {
           const webpBuffer = await webpBlob.arrayBuffer();
           const webpBase64 = btoa(String.fromCharCode.apply(null, new Uint8Array(webpBuffer)));
 
-          document.getElementById('base64Output').value = webpBase64;
+          return = webpBase64;
         };
         img.src = event.target.result;
       };
