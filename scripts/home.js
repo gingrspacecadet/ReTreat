@@ -48,9 +48,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     postBox.addEventListener("blur", () => {
         if (postBox.value.trim() === "") {
-            postBox.style.height = "4vh";
+            postBox.style.height = "2vh";
             postButton.style.display = "none";
-            postsContainer.style.height = "calc(80vh - 14vh)";
+            postsContainer.style.height = "calc(80vh - 12vh)";
         }
     });
 
