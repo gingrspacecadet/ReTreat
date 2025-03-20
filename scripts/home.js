@@ -51,6 +51,12 @@ function logout() {
     window.location.href = 'logout.php';
 }
 
+// Function to check if a string is a valid base64 image
+function isBase64Image(str) {
+    const base64Pattern = /^data:image\/(png|jpeg|jpg|gif);base64,/;
+    return base64Pattern.test(str);
+}
+
 // Function to load posts from the Worker API
 async function loadPosts() {
     if (loading || allPostsLoaded) return;
@@ -70,6 +76,12 @@ async function loadPosts() {
 
             data.posts.forEach(post => {
                 let formattedContent = markdown.toHTML(post.content); // Parse and render Markdown
+
+                // Check if the content is a base64 image and display it as an image
+                if (isBase64Image(post.content)) {
+                    formattedContent = `<img src="${post.content}" alt="Image" />`;
+                }
+
                 let newPost = `<div class='post'><p><strong>${post.username}:</strong></p><p>${formattedContent}</p></div>`;
                 document.getElementById("posts").innerHTML += newPost;
             });
