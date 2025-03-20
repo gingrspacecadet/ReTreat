@@ -51,6 +51,24 @@ function logout() {
     window.location.href = 'logout.php';
 }
 
+// Function to check if a string is a valid base64 image
+function isBase64Image(str) {
+    const base64Pattern = /^data:image\/(png|jpeg|jpg|gif|webp);base64,/;
+    return base64Pattern.test(str);
+}
+
+// Function to check if a string contains a valid base64 image
+function containsBase64Image(str) {
+    const base64Pattern = /data:image\/(png|jpeg|jpg|gif|webp);base64,[A-Za-z0-9+/=]+/g;
+    return base64Pattern.test(str);
+}
+
+// Function to replace base64 image strings with <img> tags
+function replaceBase64Images(str) {
+    const base64Pattern = /data:image\/(png|jpeg|jpg|gif|webp);base64,[A-Za-z0-9+/=]+/g;
+    return str.replace(base64Pattern, match => `<img src="${match}" alt="Image" />`);
+}
+
 // Function to load posts from the Worker API
 async function loadPosts() {
     if (loading || allPostsLoaded) return;
@@ -69,7 +87,13 @@ async function loadPosts() {
             }
 
             data.posts.forEach(post => {
-                let formattedContent = post.content.replace(/\n/g, "<br>");
+                let formattedContent = markdown.toHTML(post.content); // Parse and render Markdown
+
+                // Check if the content contains a base64 image and replace it with an <img> tag
+                if (containsBase64Image(post.content)) {
+                    formattedContent = replaceBase64Images(formattedContent);
+                }
+
                 let newPost = `<div class='post'><p><strong>${post.username}:</strong></p><p>${formattedContent}</p></div>`;
                 document.getElementById("posts").innerHTML += newPost;
             });
@@ -115,7 +139,7 @@ function submitPost() {
             document.getElementById("message").innerText = "Post successful!";
             document.getElementById("message").style.color = "green";
 
-            let newPost = `<div class='post'><p><strong>${username}:</strong></p><p>${content}</p></div>`;
+            let newPost = `<div class='post'><p><strong>${username}:</strong></p><p>${markdown.toHTML(content)}</p></div>`; // Parse and render Markdown
             document.getElementById("posts").insertAdjacentHTML('afterbegin', newPost);
         } else {
             document.getElementById("message").innerText = "Error: " + data.error;
