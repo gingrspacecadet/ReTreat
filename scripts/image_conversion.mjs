@@ -1,7 +1,4 @@
-export async function convertToWebPBase64() {
-      const fileInput = document.getElementById('imageInput');
-      const file = fileInput.files[0];
-
+export async function convertToWebPBase64(file) {
       if (!file) {
         alert("No file selected.");
         return;
