@@ -5,6 +5,7 @@ let allPostsLoaded = false;
 const baseDomain = window.location.hostname.includes("canary-ec4") 
   ? "canary" 
   : "";
+const base64Pattern = /data:image\/(png|jpeg|jpg|gif|webp);base64,[A-Za-z0-9+/=]+/g;
 
 // Function to get the cookie value by name
 function getCookie(name) {
@@ -51,21 +52,13 @@ function logout() {
     window.location.href = 'logout.php';
 }
 
-// Function to check if a string is a valid base64 image
-function isBase64Image(str) {
-    const base64Pattern = /^data:image\/(png|jpeg|jpg|gif|webp);base64,/;
-    return base64Pattern.test(str);
-}
-
 // Function to check if a string contains a valid base64 image
 function containsBase64Image(str) {
-    const base64Pattern = /data:image\/(png|jpeg|jpg|gif|webp);base64,[A-Za-z0-9+/=]+/g;
     return base64Pattern.test(str);
 }
 
 // Function to replace base64 image strings with <img> tags
 function replaceBase64Images(str) {
-    const base64Pattern = /data:image\/(png|jpeg|jpg|gif|webp);base64,[A-Za-z0-9+/=]+/g;
     return str.replace(base64Pattern, match => `<img src="${match}" alt="Image" />`);
 }
 
