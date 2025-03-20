@@ -75,11 +75,13 @@ async function loadPosts() {
             }
 
             data.posts.forEach(post => {
-                let formattedContent = markdown.toHTML(post.content); // Parse and render Markdown
+                let formattedContent;
 
                 // Check if the content is a base64 image and display it as an image
                 if (isBase64Image(post.content)) {
                     formattedContent = `<img src="${post.content}" alt="Image" />`;
+                } else {
+                    formattedContent = markdown.toHTML(post.content); // Parse and render Markdown
                 }
 
                 let newPost = `<div class='post'><p><strong>${post.username}:</strong></p><p>${formattedContent}</p></div>`;
