@@ -106,6 +106,7 @@ async function loadPosts() {
         const data = await response.json();
 
         if (response.ok && data.success) {
+            console.log("recieved");
             if (data.posts.length === 0) {
                 allPostsLoaded = true;
                 document.getElementById("loading").innerText = "No more posts.";
@@ -118,6 +119,7 @@ async function loadPosts() {
                 // Check if the content contains a base64 image and replace it with an <img> tag
                 if (containsBase64Image(post.content)) {
                     formattedContent = replaceBase64Images(formattedContent);
+                    console.log("replaced");
                 }
 
                 let newPost = `<div class='post'><p><strong>${post.username}:</strong></p><p>${formattedContent}</p></div>`;
