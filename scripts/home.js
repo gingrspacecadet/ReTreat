@@ -196,8 +196,8 @@ function toggleMode() {
 }
 
 // Handle image uploading
-async function uploadImage() {
-    let files = fileInput.files;
+async function uploadImage(event) {
+    let files = event.target.files; // Use event.target.files instead of fileInput.files
     if (files.length === 0) {
         alert("no files selected");
         return;
@@ -344,4 +344,4 @@ async function convertToWebPBase64(file) {
       alert("Decompression error: " + error);
       document.getElementById('progressBar').querySelector('div').style.width = '0%';
     }
-}  
+}
