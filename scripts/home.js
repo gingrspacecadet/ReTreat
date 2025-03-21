@@ -42,6 +42,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const postButtons = document.querySelectorAll(".post-box button");
     const postsContainer = document.getElementById("posts");
 
+    const fileInput = document.getElementById("uploadImage"); // Initialize fileInput here
+    fileInput.addEventListener('change', uploadImage);
+    
     postBox.addEventListener("focus", () => {
         postBox.style.height = "10vh";
         postButtons.foreach((button) => {
@@ -52,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     postBox.addEventListener("blur", () => {
-        if (postBox.value.trim() === "") {
+        if (postBox.value.trim() === "" && !fileInput.matchesSelector(":focus") && uploadedImages.length == 0) {
             postBox.style.height = "2vh";
             postButtons.foreach((button) => {
                 button.style.display = "none";
@@ -68,9 +71,6 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("posts").addEventListener("scrollend", (event) => {
         loadPosts();
     });
-
-    fileInput = document.getElementById("uploadImage"); // Initialize fileInput here
-    fileInput.addEventListener('change', uploadImage);
 });
 
 function settings() {
