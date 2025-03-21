@@ -8,8 +8,9 @@ const baseDomain = window.location.hostname.includes("canary-ec4")
 const base64Pattern = /data:image\/(png|jpeg|jpg|gif|webp);base64,[A-Za-z0-9+/=]+/g;
 
 let uploadedImages = [];
-import { convertToWebPBase64 } from "./scripts/image_conversion.mjs";
-import { convertBase64ToWebP } from "./scripts/image_conversion.mjs";
+let fileInput; // Define fileInput here
+import { convertToWebPBase64 } from "./image_conversion.js";
+import { convertBase64ToWebP } from "./image_conversion.js";
 
 // Function to get the cookie value by name
 function getCookie(name) {
@@ -64,6 +65,9 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("posts").addEventListener("scrollend", (event) => {
         loadPosts();
     });
+
+    fileInput = document.getElementById("uploadImage"); // Initialize fileInput here
+    fileInput.addEventListener('change', uploadImage);
 });
 
 function settings() {
@@ -127,10 +131,10 @@ async function loadPosts() {
 }
 
 // Function to submit a new post to the Worker API
-function submitPost() {
+export function submitPost() {
     let content = document.getElementById("postContent").value.trim();
-    foreach (image in uploadedImages){
-      content += " " + image
+    for (let image of uploadedImages) {
+        content += " " + image;
     }
     let username = getCookie("username"); // Retrieve username from cookie
 
@@ -186,18 +190,15 @@ function toggleMode() {
     }
 }
 
-fileInput = document.getElementById("uploadImage")
-fileInput.addEventListener('change', uploadImage);
-
 // Handle image uploading
-async function uploadImage(){
-    files = fileInput.files
+async function uploadImage() {
+    let files = fileInput.files;
     if (files.length === 0) {
-      alert("no files selected")
-      return;
+        alert("no files selected");
+        return;
     }
 
-    foreach (file in files){
-        uploadedImages.append(convertToWebPBase64(file));
+    for (let file of files) {
+        uploadedImages.push(await convertToWebPBase64(file));
     }
 }
