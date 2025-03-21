@@ -7,6 +7,10 @@ const baseDomain = window.location.hostname.includes("canary-ec4")
   : "";
 const base64Pattern = /data:image\/(png|jpeg|jpg|gif|webp);base64,[A-Za-z0-9+/=]+/g;
 
+let uploadedImages = [];
+import { convertToWebPBase64 } from "./scripts/image_conversion.mjs";
+import { convertBase64ToWebP } from "./scripts/image_conversion.mjs";
+
 // Function to get the cookie value by name
 function getCookie(name) {
     let cookieArr = document.cookie.split("; ");
@@ -125,6 +129,9 @@ async function loadPosts() {
 // Function to submit a new post to the Worker API
 function submitPost() {
     let content = document.getElementById("postContent").value.trim();
+    foreach (image in uploadedImages){
+      content += " " + image
+    }
     let username = getCookie("username"); // Retrieve username from cookie
 
     if (!username) {
@@ -176,5 +183,21 @@ function toggleMode() {
     } else {
         modeButton.innerHTML = '<img src="/assets/moon.png" width="40" height="40">';
         localStorage.setItem("dark-mode", "false");
+    }
+}
+
+fileInput = document.getElementById("uploadImage")
+fileInput.addEventListener('change', uploadImage);
+
+// Handle image uploading
+async function uploadImage(){
+    files = fileInput.files
+    if (files.length === 0) {
+      alert("no files selected")
+      return;
+    }
+
+    foreach (file in files){
+        uploadedImages.append(convertToWebPBase64(file));
     }
 }

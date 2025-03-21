@@ -199,3 +199,8 @@ h1 {
 #posts {
 	padding: 20px;
 }
+
+#postButtonsContainer {
+	display: flex;
+	jusitfy-content: space-between;
+}
