@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     postBox.addEventListener("blur", () => {
-        if (postBox.value.trim() === "" && !fileInputButton.matchesSelector(":focus") && uploadedImages.length == 0) {
+        if (postBox.value.trim() === "" && !document.activeElement === fileInputButton && uploadedImages.length == 0) {
             postBox.style.height = "2vh";
             postButtons.forEach((button) => {
                 button.style.display = "none";
