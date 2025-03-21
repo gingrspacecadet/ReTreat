@@ -197,9 +197,14 @@ function toggleMode() {
 
 // Handle image uploading
 async function uploadImage() {
+    if (!fileInput || !fileInput.files) {
+        alert("No file input element found or no files selected");
+        return;
+    }
+
     let files = fileInput.files;
     if (files.length === 0) {
-        alert("no files selected");
+        alert("No files selected");
         return;
     }
 
@@ -344,4 +349,4 @@ async function convertToWebPBase64(file) {
       alert("Decompression error: " + error);
       document.getElementById('progressBar').querySelector('div').style.width = '0%';
     }
-}  
+}
