@@ -202,5 +202,5 @@ h1 {
 
 #postButtonsContainer {
 	display: flex;
-	jusitfy-content: space-between;
+	justify-content: space-between; /* Corrected typo */
 }
