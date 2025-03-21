@@ -70,11 +70,11 @@ document.addEventListener("DOMContentLoaded", function () {
     fileInput.addEventListener('change', uploadImage);
 });
 
-export function settings() {
+function settings() {
     window.location.href = 'settings.html';
 }
 
-export function logout() {
+function logout() {
     window.location.href = 'logout.php';
 }
 
@@ -184,7 +184,7 @@ export function submitPost() {
     document.getElementById("postContent").value = "";
 }
 
-export function toggleMode() {
+function toggleMode() {
     document.body.classList.toggle("dark-mode");
     const modeButton = document.getElementById("mode-toggle");
 
