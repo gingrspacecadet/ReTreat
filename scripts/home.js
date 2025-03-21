@@ -113,17 +113,22 @@ async function loadPosts() {
                 return;
             }
 
-            data.posts.forEach(post => {
-                let formattedContent = markdown.toHTML(post.content); // Parse and render Markdown
+            // Create an array of promises for each post's content replacement
+            const postPromises = data.posts.map(async post => {
+                let formattedContent = markdown.toHTML(post.content);
 
-                // Check if the content contains a base64 image and replace it with an <img> tag
                 if (containsBase64Image(post.content)) {
                     formattedContent = await replaceBase64Images(formattedContent);
                 }
 
-                let newPost = `<div class='post'><p><strong>${post.username}:</strong></p><p>${formattedContent}</p></div>`;
-                document.getElementById("posts").innerHTML += newPost;
+                return `<div class='post'><p><strong>${post.username}:</strong></p><p>${formattedContent}</p></div>`;
             });
+
+            // Wait for all promises to resolve
+            const newPosts = await Promise.all(postPromises);
+
+            // Append all new posts to the DOM
+            document.getElementById("posts").innerHTML += newPosts.join("");
 
             offset += limit;
         } else {
