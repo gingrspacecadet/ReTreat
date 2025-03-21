@@ -212,6 +212,14 @@ h1 {
 	padding: 10px;
 	cursor: pointer;
 	transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 24px; /* Adjust icon size */
+}
+
+#uploadImage::before {
+	content: '+'; /* Display plus icon */
 }
 
 body.dark-mode #uploadImage {
