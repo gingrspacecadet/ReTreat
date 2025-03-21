@@ -10,6 +10,7 @@ const base64Pattern = /data:image\/(png|jpeg|jpg|gif|webp);base64,[A-Za-z0-9+/=]
 let uploadedImages = [];
 let fileInput; // Define fileInput here
 import { convertToWebPBase64 } from "./image_conversion.js";
+import { convertBase64ToWebP } from "./image_conversion.js";
 
 // Function to get the cookie value by name
 function getCookie(name) {
