@@ -259,6 +259,7 @@ async function convertToWebPBase64(file) {
   }
   
   async function convertBase64ToPNG(base64Input) {
+    try {
       const binaryString = atob(base64Input);
       const byteArr = new Uint8Array(binaryString.length);
       const progressBar = document.getElementById('progressBar').querySelector('div');
