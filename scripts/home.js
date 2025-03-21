@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
         loadPosts();
     });
 
-    const fileInput = document.getElementById("uploadImage"); // Initialize fileInput here
+    fileInput = document.getElementById("uploadImage"); // Initialize fileInput here
     fileInput.addEventListener('change', uploadImage);
 });
 
@@ -194,6 +194,10 @@ function toggleMode() {
     }
 }
 
+//Add pre-processing here
+function triggerUploadImage() {
+    fileInput.click();
+}
 // Handle image uploading
 async function uploadImage() {
     let files = fileInput.files;
