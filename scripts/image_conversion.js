@@ -17,8 +17,8 @@ export async function convertToWebPBase64(file) {
         const totalPixels = width * height;
 
         // Maximum resolution check
-        const maxWidth = 1920;
-        const maxHeight = 1080;
+        const maxWidth = 960;
+        const maxHeight = 540;
         if (width > maxWidth || height > maxHeight) {
           const widthRatio = maxWidth / width;
           const heightRatio = maxHeight / height;
