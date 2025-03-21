@@ -129,8 +129,8 @@ async function loadPosts() {
 // Function to submit a new post to the Worker API
 function submitPost() {
     let content = document.getElementById("postContent").value.trim();
-    foreach (image in uploadedImages){
-      content += " " + image
+    for (let image of uploadedImages) {
+        content += " " + image;
     }
     let username = getCookie("username"); // Retrieve username from cookie
 
@@ -190,14 +190,14 @@ fileInput = document.getElementById("uploadImage")
 fileInput.addEventListener('change', uploadImage);
 
 // Handle image uploading
-async function uploadImage(){
-    files = fileInput.files
+async function uploadImage() {
+    let files = fileInput.files;
     if (files.length === 0) {
-      alert("no files selected")
-      return;
+        alert("no files selected");
+        return;
     }
 
-    foreach (file in files){
-        uploadedImages.append(convertToWebPBase64(file));
+    for (let file of files) {
+        uploadedImages.push(await convertToWebPBase64(file));
     }
 }
