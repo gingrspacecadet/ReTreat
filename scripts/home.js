@@ -130,7 +130,7 @@ async function loadPosts() {
 }
 
 // Function to submit a new post to the Worker API
-async function submitPost() {
+export function submitPost() {
     let content = document.getElementById("postContent").value.trim();
     for (let image of uploadedImages) {
         content += " " + image;
