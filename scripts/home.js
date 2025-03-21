@@ -63,6 +63,9 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("posts").addEventListener("scrollend", (event) => {
         loadPosts();
     });
+
+    fileInput = document.getElementById("uploadImage"); // Initialize fileInput here
+    fileInput.addEventListener('change', uploadImage);
 });
 
 function settings() {
@@ -192,7 +195,75 @@ function toggleMode() {
     }
 }
 
-async function convertBase64ToPNG() {
+// Handle image uploading
+async function uploadImage() {
+    let files = fileInput.files;
+    if (files.length === 0) {
+        alert("no files selected");
+        return;
+    }
+
+    for (let file of files) {
+        uploadedImages.push(await convertToWebPBase64(file));
+    }
+}
+
+async function convertToWebPBase64(file) {
+    if (!file) {
+      alert("No file selected.");
+      return;
+    }
+  
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+  
+      reader.onload = async function(event) {
+        const img = new Image();
+        img.onload = async function() {
+          // Resize the image (using maxPixels)
+          const maxPixels = 800 * 600; // Adjust as needed (e.g., 480000)
+          let width = img.width;
+          let height = img.height;
+          const totalPixels = width * height;
+  
+          // Maximum resolution check
+          const maxWidth = 960;
+          const maxHeight = 540;
+          if (width > maxWidth || height > maxHeight) {
+            const widthRatio = maxWidth / width;
+            const heightRatio = maxHeight / height;
+            const scaleRatio = Math.min(widthRatio, heightRatio);
+            width = Math.round(width * scaleRatio);
+            height = Math.round(height * scaleRatio);
+          }
+  
+          if (totalPixels > maxPixels) {
+            const scaleRatio = Math.sqrt(maxPixels / totalPixels);
+            width = Math.round(width * scaleRatio);
+            height = Math.round(height * scaleRatio);
+          }
+  
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+  
+          const webpBlob = await new Promise(resolve => canvas.toBlob(resolve, 'image/webp', 0.8));
+          const webpBuffer = await webpBlob.arrayBuffer();
+          const webpBase64 = btoa(String.fromCharCode.apply(null, new Uint8Array(webpBuffer)));
+  
+          resolve("data:image/webp;base64," + webpBase64);
+        };
+        img.src = event.target.result;
+      };
+  
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+}
+  
+  async function convertBase64ToPNG() {
     const base64Input = document.getElementById('base64Input').value;
     try {
       const binaryString = atob(base64Input);
@@ -237,7 +308,7 @@ async function convertBase64ToPNG() {
       alert("Decompression error: " + error);
       document.getElementById('progressBar').querySelector('div').style.width = '0%';
     }
-  }
+}
   
   async function convertBase64ToWebP() {
     const base64Input = document.getElementById('base64Input').value;
@@ -273,4 +344,4 @@ async function convertBase64ToPNG() {
       alert("Decompression error: " + error);
       document.getElementById('progressBar').querySelector('div').style.width = '0%';
     }
-  }
+}  
