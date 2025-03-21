@@ -204,3 +204,14 @@ h1 {
 	display: flex;
 	justify-content: space-between; /* Corrected typo */
 }
+
+.upload-label {
+    display: inline-block;
+    padding: 1vw 2vw;
+    margin-right: 4px;
+    background-color: #007bff; /* Use accent color */
+    color: #f4f4f4;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}

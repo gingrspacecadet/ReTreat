@@ -22,7 +22,8 @@
             <textarea id="postContent" placeholder="What's on your mind?"></textarea><br>
         </div>
         <div id="postButtonsContainer">
-            <input type="file" multiple id="uploadImage" accept="image/png" align-items="left">+</button>
+            <label for="uploadImage" class="upload-label">+</label>
+            <input type="file" multiple id="uploadImage" accept="image/png" style="display: none;">
             <button onclick="submitPost()">Post</button>
         </div>
         <div id="message"></div>
