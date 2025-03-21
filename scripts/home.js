@@ -8,8 +8,8 @@ const baseDomain = window.location.hostname.includes("canary-ec4")
 const base64Pattern = /data:image\/(png|jpeg|jpg|gif|webp);base64,[A-Za-z0-9+/=]+/g;
 
 let uploadedImages = [];
-import { convertToWebPBase64 } from "./scripts/image_conversion.mjs";
-import { convertBase64ToWebP } from "./scripts/image_conversion.mjs";
+import { convertToWebPBase64 } from "../scripts/image_conversion.mjs";
+import { convertBase64ToWebP } from "../scripts/image_conversion.mjs";
 
 // Function to get the cookie value by name
 function getCookie(name) {
