@@ -92,7 +92,8 @@ function containsBase64Image(str) {
 
 // Function to replace base64 image strings with <img> tags
 function replaceBase64Images(str) {
-    return str.replace(base64Pattern, match => `<img src="${await convertBase64ToWebP(match.split(",")[1])}" alt="Image" />`);
+    url = await convertBase64ToWebP(match.split(",")[1]);
+    return str.replace(base64Pattern, match => `<img src="${url}" alt="Image" />`);
 }
 
 // Function to load posts from the Worker API
