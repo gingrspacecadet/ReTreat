@@ -8,6 +8,7 @@ const baseDomain = window.location.hostname.includes("canary-ec4")
 const base64Pattern = /data:image\/(png|jpeg|jpg|gif|webp);base64,[A-Za-z0-9+/=]+/g;
 
 let uploadedImages = [];
+let fileInput; // Define fileInput here
 import { convertToWebPBase64 } from "../scripts/image_conversion.mjs";
 import { convertBase64ToWebP } from "../scripts/image_conversion.mjs";
 
@@ -64,6 +65,9 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("posts").addEventListener("scrollend", (event) => {
         loadPosts();
     });
+
+    fileInput = document.getElementById("uploadImage"); // Initialize fileInput here
+    fileInput.addEventListener('change', uploadImage);
 });
 
 function settings() {
@@ -185,9 +189,6 @@ function toggleMode() {
         localStorage.setItem("dark-mode", "false");
     }
 }
-
-fileInput = document.getElementById("uploadImage")
-fileInput.addEventListener('change', uploadImage);
 
 // Handle image uploading
 async function uploadImage() {
