@@ -16,6 +16,17 @@ export async function convertToWebPBase64(file) {
         let height = img.height;
         const totalPixels = width * height;
 
+        // Maximum resolution check
+        const maxWidth = 1920;
+        const maxHeight = 1080;
+        if (width > maxWidth || height > maxHeight) {
+          const widthRatio = maxWidth / width;
+          const heightRatio = maxHeight / height;
+          const scaleRatio = Math.min(widthRatio, heightRatio);
+          width = Math.round(width * scaleRatio);
+          height = Math.round(height * scaleRatio);
+        }
+
         if (totalPixels > maxPixels) {
           const scaleRatio = Math.sqrt(maxPixels / totalPixels);
           width = Math.round(width * scaleRatio);
