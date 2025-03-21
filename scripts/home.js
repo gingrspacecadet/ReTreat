@@ -161,7 +161,14 @@ export function submitPost() {
             document.getElementById("message").innerText = "Post successful!";
             document.getElementById("message").style.color = "green";
 
-            let newPost = `<div class='post'><p><strong>${username}:</strong></p><p>${markdown.toHTML(content)}</p></div>`; // Parse and render Markdown
+            let formattedContent = markdown.toHTML(content); // Parse and render Markdown
+
+            // Check if the content contains a base64 image and replace it with an <img> tag
+            if (containsBase64Image(content)) {
+                formattedContent = replaceBase64Images(formattedContent);
+            }
+
+            let newPost = `<div class='post'><p><strong>${username}:</strong></p><p>${formattedContent}</p></div>`;
             document.getElementById("posts").insertAdjacentHTML('afterbegin', newPost);
         } else {
             document.getElementById("message").innerText = "Error: " + data.error;
