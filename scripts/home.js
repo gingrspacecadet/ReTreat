@@ -9,7 +9,6 @@ const base64Pattern = /data:image\/(png|jpeg|jpg|gif|webp);base64,[A-Za-z0-9+/=]
 
 let uploadedImages = [];
 let fileInput; // Define fileInput here
-
 // Function to get the cookie value by name
 function getCookie(name) {
     let cookieArr = document.cookie.split("; ");
@@ -129,7 +128,7 @@ async function loadPosts() {
 }
 
 // Function to submit a new post to the Worker API
-function submitPost() {
+export function submitPost() {
     let content = document.getElementById("postContent").value.trim();
     for (let image of uploadedImages) {
         content += " " + image;
@@ -159,14 +158,7 @@ function submitPost() {
             document.getElementById("message").innerText = "Post successful!";
             document.getElementById("message").style.color = "green";
 
-            let formattedContent = markdown.toHTML(content); // Parse and render Markdown
-
-            // Check if the content contains a base64 image and replace it with an <img> tag
-            if (containsBase64Image(content)) {
-                formattedContent = replaceBase64Images(formattedContent);
-            }
-
-            let newPost = `<div class='post'><p><strong>${username}:</strong></p><p>${formattedContent}</p></div>`;
+            let newPost = `<div class='post'><p><strong>${username}:</strong></p><p>${markdown.toHTML(content)}</p></div>`; // Parse and render Markdown
             document.getElementById("posts").insertAdjacentHTML('afterbegin', newPost);
         } else {
             document.getElementById("message").innerText = "Error: " + data.error;
@@ -196,8 +188,8 @@ function toggleMode() {
 }
 
 // Handle image uploading
-async function uploadImage(event) {
-    let files = event.target.files; // Use event.target.files instead of fileInput.files
+async function uploadImage() {
+    let files = fileInput.files;
     if (files.length === 0) {
         alert("no files selected");
         return;
@@ -225,17 +217,6 @@ async function convertToWebPBase64(file) {
           let width = img.width;
           let height = img.height;
           const totalPixels = width * height;
-  
-          // Maximum resolution check
-          const maxWidth = 960;
-          const maxHeight = 540;
-          if (width > maxWidth || height > maxHeight) {
-            const widthRatio = maxWidth / width;
-            const heightRatio = maxHeight / height;
-            const scaleRatio = Math.min(widthRatio, heightRatio);
-            width = Math.round(width * scaleRatio);
-            height = Math.round(height * scaleRatio);
-          }
   
           if (totalPixels > maxPixels) {
             const scaleRatio = Math.sqrt(maxPixels / totalPixels);
@@ -344,4 +325,4 @@ async function convertToWebPBase64(file) {
       alert("Decompression error: " + error);
       document.getElementById('progressBar').querySelector('div').style.width = '0%';
     }
-}
+  }  

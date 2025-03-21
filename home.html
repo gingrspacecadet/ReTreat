@@ -6,7 +6,7 @@
     <title>ReTreat - Home</title>
     <link rel="stylesheet" href="/styles/home.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="/scripts/home.js"></script>
+    <script src="/scripts/home.js" type="module" ></script>
     <script src="https://cdn.jsdelivr.net/npm/markdown@0.5.0/lib/markdown.min.js"></script>
 </head>
 
@@ -22,9 +22,8 @@
             <textarea id="postContent" placeholder="What's on your mind?"></textarea><br>
         </div>
         <div id="postButtonsContainer">
+            <input type="file" multiple id="uploadImage" accept="image/png">Upload Image</button>
             <button onclick="submitPost()">Post</button>
-            <label for="uploadImage" id="uploadImageLabel">+</label>
-            <input type="file" id="uploadImage" multiple style="display: none;">
         </div>
         <div id="message"></div>
     </div>
@@ -32,5 +31,9 @@
     <div class="posts-container" id="posts"></div>
     <p id="loading">Loading more posts...</p>
 </div>
+<script type="module">
+    import { submitPost } from '/scripts/home.js';
+    window.submitPost = submitPost;
+</script>
 </body>
 </html>
