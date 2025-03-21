@@ -39,11 +39,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     const postBox = document.getElementById("postContent");
+    const postArea = document.getElementById("main-post-box");
     const postButtons = document.querySelectorAll(".post-box button");
     const postsContainer = document.getElementById("posts");
     const fileInputButton = document.querySelector(".upload-button");
     
-    postBox.addEventListener("focusin", () => {
+    postArea.addEventListener("focusin", () => {
         postBox.style.height = "10vh";
         postButtons.forEach((button) => {
           button.style.display = "inline-block";
@@ -52,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
         postsContainer.style.height = "calc(80vh - 20vh)";
     });
 
-    postBox.addEventListener("focusout", () => {
+    postArea.addEventListener("focusout", () => {
         if (postBox.value.trim() === "" && uploadedImages.length == 0) {
             postBox.style.height = "2vh";
             postButtons.forEach((button) => {
