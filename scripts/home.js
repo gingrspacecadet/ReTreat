@@ -91,7 +91,7 @@ function containsBase64Image(str) {
 }
 
 // Function to replace base64 image strings with <img> tags
-function replaceBase64Images(str) {
+async function replaceBase64Images(str) {
     url = await convertBase64ToWebP(match.split(",")[1]);
     return str.replace(base64Pattern, match => `<img src="${url}" alt="Image" />`);
 }
@@ -118,7 +118,7 @@ async function loadPosts() {
 
                 // Check if the content contains a base64 image and replace it with an <img> tag
                 if (containsBase64Image(post.content)) {
-                    formattedContent = replaceBase64Images(formattedContent);
+                    formattedContent = await replaceBase64Images(formattedContent);
                 }
 
                 let newPost = `<div class='post'><p><strong>${post.username}:</strong></p><p>${formattedContent}</p></div>`;
