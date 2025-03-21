@@ -262,13 +262,10 @@ async function convertToWebPBase64(file) {
     try {
       const binaryString = atob(base64Input);
       const byteArr = new Uint8Array(binaryString.length);
-      const progressBar = document.getElementById('progressBar').querySelector('div');
       const totalBytes = binaryString.length;
   
       for (let i = 0; i < binaryString.length; i++) {
         byteArr[i] = binaryString.charCodeAt(i);
-        const progress = (i + 1) / totalBytes * 100;
-        progressBar.style.width = progress + '%';
       }
   
       const webpBlob = new Blob([byteArr], {
@@ -286,14 +283,6 @@ async function convertToWebPBase64(file) {
           const a = document.createElement('a');
           a.href = url;
           a.download = 'converted_image.png';
-  
-          requestAnimationFrame(() => {
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            progressBar.style.width = '0%';
-          });
         }, 'image/png');
       }
       img.src = URL.createObjectURL(webpBlob);
@@ -312,8 +301,6 @@ async function convertToWebPBase64(file) {
   
       for (let i = 0; i < binaryString.length; i++) {
         byteArr[i] = binaryString.charCodeAt(i);
-        const progress = (i + 1) / totalBytes * 100;
-        progressBar.style.width = progress + '%';
       }
   
       const webpBlob = new Blob([byteArr], {
