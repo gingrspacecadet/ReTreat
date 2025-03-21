@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
     postBox.addEventListener("focus", () => {
         postBox.style.height = "10vh";
-        postButtons.foreach((button) => {
+        postButtons.forEach((button) => {
           button.style.display = "inline-block";
         });
         document.querySelector(".upload-label").style.display = "inline-block"; // Show upload label
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
     postBox.addEventListener("blur", () => {
         if (postBox.value.trim() === "" && !fileInput.matchesSelector(":focus") && uploadedImages.length == 0) {
             postBox.style.height = "2vh";
-            postButtons.foreach((button) => {
+            postButtons.forEach((button) => {
                 button.style.display = "none";
             });
             document.querySelector(".upload-label").style.display = "none"; // Hide upload label
