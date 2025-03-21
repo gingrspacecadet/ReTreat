@@ -92,7 +92,7 @@ function containsBase64Image(str) {
 
 // Function to replace base64 image strings with <img> tags
 function replaceBase64Images(str) {
-    return str.replace(base64Pattern, match => `<img src="${match}" alt="Image" />`);
+    return str.replace(base64Pattern, match => `<img src="${convertBase64ToWebp(str)}" alt="Image" />`);
 }
 
 // Function to load posts from the Worker API
@@ -258,9 +258,7 @@ async function convertToWebPBase64(file) {
     });
   }
   
-  async function convertBase64ToPNG() {
-    const base64Input = document.getElementById('base64Input').value;
-    try {
+  async function convertBase64ToPNG(base64Input) {
       const binaryString = atob(base64Input);
       const byteArr = new Uint8Array(binaryString.length);
       const progressBar = document.getElementById('progressBar').querySelector('div');
@@ -305,8 +303,7 @@ async function convertToWebPBase64(file) {
     }
   }
   
-  async function convertBase64ToWebP() {
-    const base64Input = document.getElementById('base64Input').value;
+  async function convertBase64ToWebP(base64Input) {
     try {
       const binaryString = atob(base64Input);
       const byteArr = new Uint8Array(binaryString.length);
@@ -322,18 +319,10 @@ async function convertToWebPBase64(file) {
       const webpBlob = new Blob([byteArr], {
         type: 'image/webp'
       });
+      
       const url = URL.createObjectURL(webpBlob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'converted_image.webp';
+      return url;
   
-      requestAnimationFrame(() => {
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        progressBar.style.width = '0%';
-      });
     } catch (error) {
       console.error("Decompression error:", error);
       alert("Decompression error: " + error);
