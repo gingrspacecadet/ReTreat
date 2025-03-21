@@ -148,7 +148,6 @@ body.dark-mode .post {
 	transition: background-color 0.3s, color 0.3s;
 }
 
-
 body.dark-mode button {
 	background-color: #333;
 	color: #181818;
@@ -203,4 +202,20 @@ h1 {
 #postButtonsContainer {
 	display: flex;
 	justify-content: space-between; /* Corrected typo */
+}
+
+#uploadImage {
+	background-color: #f4f4f4; /* Light mode background */
+	color: #2e2e2e; /* Light mode text color */
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding: 10px;
+	cursor: pointer;
+	transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+body.dark-mode #uploadImage {
+	background-color: #333; /* Dark mode background */
+	color: #f4f4f4; /* Dark mode text color */
+	border-color: #555;
 }
