@@ -30,7 +30,8 @@ export async function convertToWebPBase64(file) {
           const webpBlob = await new Promise(resolve => canvas.toBlob(resolve, 'image/webp', 0.8));
           const webpBuffer = await webpBlob.arrayBuffer();
           const webpBase64 = btoa(String.fromCharCode.apply(null, new Uint8Array(webpBuffer)));
-
+              
+          console.log("data:image/webp;base64" + webpBase64")
           return "data:image/webp;base64" + webpBase64;
         };
         img.src = event.target.result;
