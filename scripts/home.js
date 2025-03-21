@@ -39,12 +39,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     const postBox = document.getElementById("postContent");
-    const postButton = document.querySelector(".post-box button");
+    const postButtons = document.querySelectorAll(".post-box button");
     const postsContainer = document.getElementById("posts");
 
     postBox.addEventListener("focus", () => {
         postBox.style.height = "10vh";
-        postButton.style.display = "inline-block";
+        postButtons.foreach((button) => {
+          button.style.display = "inline-block";
+        });
         document.querySelector(".upload-label").style.display = "inline-block"; // Show upload label
         postsContainer.style.height = "calc(80vh - 20vh)";
     });
@@ -52,7 +54,9 @@ document.addEventListener("DOMContentLoaded", function () {
     postBox.addEventListener("blur", () => {
         if (postBox.value.trim() === "") {
             postBox.style.height = "2vh";
-            postButton.style.display = "none";
+            postButtons.foreach((button) => {
+                button.style.display = "none";
+            });
             document.querySelector(".upload-label").style.display = "none"; // Hide upload label
             postsContainer.style.height = "calc(80vh - 12vh)";
         }
