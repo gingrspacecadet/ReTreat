@@ -308,7 +308,6 @@ async function convertToWebPBase64(file) {
     try {
       const binaryString = atob(base64Input);
       const byteArr = new Uint8Array(binaryString.length);
-      const progressBar = document.getElementById('progressBar').querySelector('div');
       const totalBytes = binaryString.length;
   
       for (let i = 0; i < binaryString.length; i++) {
