@@ -41,9 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const postBox = document.getElementById("postContent");
     const postButtons = document.querySelectorAll(".post-box button");
     const postsContainer = document.getElementById("posts");
-
-    const fileInput = document.getElementById("uploadImage"); // Initialize fileInput here
-    fileInput.addEventListener('change', uploadImage);
+    const fileInputButton = document.querySelector(".upload-button");
     
     postBox.addEventListener("focus", () => {
         postBox.style.height = "10vh";
@@ -71,6 +69,9 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("posts").addEventListener("scrollend", (event) => {
         loadPosts();
     });
+
+    const fileInput = document.getElementById("uploadImage"); // Initialize fileInput here
+    fileInput.addEventListener('change', uploadImage);
 });
 
 function settings() {
