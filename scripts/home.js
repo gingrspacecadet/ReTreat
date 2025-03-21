@@ -197,14 +197,9 @@ function toggleMode() {
 
 // Handle image uploading
 async function uploadImage() {
-    if (!fileInput || !fileInput.files) {
-        alert("No file input element found or no files selected");
-        return;
-    }
-
     let files = fileInput.files;
     if (files.length === 0) {
-        alert("No files selected");
+        alert("no files selected");
         return;
     }
 
@@ -266,7 +261,7 @@ async function convertToWebPBase64(file) {
       reader.onerror = reject;
       reader.readAsDataURL(file);
     });
-}
+  }
   
   async function convertBase64ToPNG() {
     const base64Input = document.getElementById('base64Input').value;
@@ -313,7 +308,7 @@ async function convertToWebPBase64(file) {
       alert("Decompression error: " + error);
       document.getElementById('progressBar').querySelector('div').style.width = '0%';
     }
-}
+  }
   
   async function convertBase64ToWebP() {
     const base64Input = document.getElementById('base64Input').value;
@@ -349,4 +344,4 @@ async function convertToWebPBase64(file) {
       alert("Decompression error: " + error);
       document.getElementById('progressBar').querySelector('div').style.width = '0%';
     }
-}
+}  
