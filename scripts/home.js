@@ -54,14 +54,16 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     postArea.addEventListener("focusout", () => {
-        if (postBox.value.trim() === "" && !postArea.contains(document.activeElement) && uploadedImages.length == 0) {
-            postBox.style.height = "2vh";
-            postButtons.forEach((button) => {
-                button.style.display = "none";
-            });
-            //document.querySelector(".upload-label").style.display = "none"; // Hide upload label
-            postsContainer.style.height = "calc(80vh - 12vh)";
-        }
+        setTimeout(() => {
+            if (postBox.value.trim() === "" && !postArea.contains(document.activeElement) && uploadedImages.length == 0) {
+                postBox.style.height = "2vh";
+                postButtons.forEach((button) => {
+                    button.style.display = "none";
+                });
+                //document.querySelector(".upload-label").style.display = "none"; // Hide upload label
+                postsContainer.style.height = "calc(80vh - 12vh)";
+            }
+        }, 0); // Use a 0ms delay to run the code after the current event loop);
     });
 
     loadPosts(); // Load posts when the page loads
