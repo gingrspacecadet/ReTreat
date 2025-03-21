@@ -224,9 +224,11 @@ async function convertToWebPBase64(file) {
       const reader = new FileReader();
   
       reader.onload = async function(event) {
+        console.log("reader");
         const img = new Image();
         img.onload = async function() {
           // Resize the image (using maxPixels)
+          console.log("loaded");
           const maxPixels = 800 * 600; // Adjust as needed (e.g., 480000)
           let width = img.width;
           let height = img.height;
@@ -239,14 +241,20 @@ async function convertToWebPBase64(file) {
           }
   
           const canvas = document.createElement('canvas');
+          console.log("canvas");
           canvas.width = width;
           canvas.height = height;
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0, width, height);
-  
+
           const webpBlob = await new Promise(resolve => canvas.toBlob(resolve, 'image/webp', 0.8));
+          console.log("blob");
           const webpBuffer = await webpBlob.arrayBuffer();
+          console.log("buffer");
           const webpBase64 = btoa(String.fromCharCode.apply(null, new Uint8Array(webpBuffer)));
+          console.log("based");
+
+          console.log(webpBase64);
   
           resolve("data:image/webp;base64," + webpBase64);
         };
