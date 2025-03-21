@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
         postsContainer.style.height = "calc(80vh - 20vh)";
     });
 
-    postArea.addEventListener("focusout", () => {
+    postArea.addEventListener("blur", () => {
         if (postBox.value.trim() === "" && uploadedImages.length == 0) {
             postBox.style.height = "2vh";
             postButtons.forEach((button) => {
