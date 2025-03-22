@@ -97,6 +97,7 @@ async function replaceBase64Images(str) {
     for (let i = 1; i < parts.length; i += 2) {
         promises.push(convertBase64ToWebP(parts[i]).then(url => {
             if (url) {
+                console.log(url); // Add this line
                 parts[i] = `<img src="${url}" alt="Image" />`;
             } else {
                 parts[i] = "";
