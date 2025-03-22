@@ -92,7 +92,19 @@ function containsBase64Image(str) {
 
 // Function to replace base64 image strings with <img> tags
 async function replaceBase64Images(str) {
-    return str.replace(base64Pattern, async match => `<img src="${console.log(await convertBase64ToWebP(match.split(",")[1]))}" alt="Image" />`);
+    const promises = [];
+    let parts = str.split(base64Pattern);
+    for (let i = 1; i < parts.length; i += 2) {
+        promises.push(convertBase64ToWebP(parts[i]).then(url => {
+            if (url) {
+                parts[i] = `<img src="${url}" alt="Image" />`;
+            } else {
+                parts[i] = "";
+            }
+        }));
+    }
+    await Promise.all(promises);
+    return parts.join("");
 }
 
 // Function to load posts from the Worker API
