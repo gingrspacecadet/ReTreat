@@ -16,6 +16,32 @@
         "logs": {
             "enabled": true
         }
-    }
+    },
+    "routes": [
+        {
+            "routePath": "/api/login",
+            "mountPath": "/api",
+            "method": "",
+            "module": [
+                "api/login.js:onRequest"
+            ]
+        },
+        {
+            "routePath": "/api/createpost",
+            "mountPath": "/api",
+            "method": "",
+            "module": [
+                "api/createpost.js:onRequest"
+            ]
+        },
+        {
+            "routePath": "/api/getposts",
+            "mountPath": "/api",
+            "method": "",
+            "module": [
+                "api/getposts.js:onRequest"
+            ]
+        }
+    ]
 }
   
