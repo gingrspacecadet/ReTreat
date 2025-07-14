@@ -17,6 +17,16 @@ export default {
   }
 };
 
+// Cloudflare Pages Functions expects an exported onRequest handler
+export async function onRequest(context) {
+  const { request, env } = context;
+  // Handle CORS preflight requests
+  if (request.method === "OPTIONS") {
+    return handleOptionsRequest();
+  }
+  return handleCreatePost(request, env);
+}
+
 async function handleGetPosts(request, env) {
   try {
     const url = new URL(request.url);
