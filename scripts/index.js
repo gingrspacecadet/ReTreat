@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
-    const response = await fetch(`https://${baseDomain}login.retreat.workers.dev`, {
+    const response = await fetch(`login.js`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
