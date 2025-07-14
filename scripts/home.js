@@ -94,7 +94,7 @@ async function loadPosts() {
     document.getElementById("loading").style.display = "block";
 
     try {
-        const response = await fetch(`/getposts?offset=${offset}&limit=${limit}`);
+        const response = await fetch(`/api/getposts?offset=${offset}&limit=${limit}`);
         const data = await response.json();
 
         if (response.ok && data.success) {
@@ -149,7 +149,7 @@ function submitPost() {
         return;
     }
 
-    fetch(`/createpost`, {
+    fetch(`/api/createpost`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, content }),
