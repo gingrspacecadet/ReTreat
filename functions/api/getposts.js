@@ -24,7 +24,7 @@ export async function onRequest(context) {
   if (request.method === "OPTIONS") {
     return handleOptionsRequest();
   }
-  return handleCreatePost(request, env);
+  return handleGetPosts(request, env);
 }
 
 async function handleGetPosts(request, env) {
